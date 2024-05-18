@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import 'assets/styles/colors.css';
+
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+.mat-typography {
+  font-family: 'Poppins', sans-serif;
+}
+
+.mat-button, .mat-card, .mat-form-field, .mat-toolbar {
+  font-family: 'Poppins', sans-serif;
+}
