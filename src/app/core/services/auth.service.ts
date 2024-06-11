@@ -18,15 +18,73 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   login(email: string, password: string): Observable<HttpResponse<any>> {
-    return this.http.post<any>(`${this.url}authenticate`, { email, password }, { ...this.httpOptions, observe: 'response' }).pipe(
-      tap(res => this.setSession(res)),
-      shareReplay(),
-      catchError(this.handleError<any>('login'))
-    );
+    if (email === 'admin@admin.com' && password === 'admin') {
+      console.log('Dummy login successful');
+      const dummyResponse = {
+        body: {
+          token: 'dummy-token',
+          expiration: Math.floor(Date.now() / 1000) + 3600, // 1 hour expiration
+          roles: [{ description: 'Admin' }]
+        },
+        status: 200,
+        statusText: 'OK',
+        headers: null,
+        url: null,
+        ok: true,
+        type: 4,
+        clone: () => null
+      } as unknown as HttpResponse<any>;
+
+      return of(dummyResponse).pipe(
+        tap(res => this.setSession(res)),
+        shareReplay()
+      );
+    } else {
+      console.log('Dummy login failed');
+      const dummyErrorResponse = {
+        body: {
+          error: 'Invalid email or password'
+        },
+        status: 401,
+        statusText: 'Unauthorized',
+        headers: null,
+        url: null,
+        ok: false,
+        type: 4,
+        clone: () => null
+      } as unknown as HttpResponse<any>;
+
+      return of(dummyErrorResponse);
+    }
+
+    // return this.http.post<any>(`${this.url}authenticate`, { email, password }, { ...this.httpOptions, observe: 'response' }).pipe(
+    //   tap(res => this.setSession(res)),
+    //   shareReplay(),
+    //   catchError(this.handleError<any>('login'))
+    // );
   }
 
-  signUp(user: any, question: any): Observable<HttpResponse<any>> {
-    return this.http.post<any>(`${this.url}signup`, { user, question }, { ...this.httpOptions, observe: 'response' }).pipe(
+  private setSession(authResult: any) {
+    const expiresAt = new Date(authResult.body.expiration * 1000);
+
+    localStorage.setItem('token', authResult.body.token);
+    localStorage.setItem('expiration', JSON.stringify(expiresAt.valueOf()));
+
+    if (authResult.body.roles == null) {
+      localStorage.setItem('role', JSON.stringify(''));
+      return;
+    }
+
+    localStorage.setItem('role', JSON.stringify(authResult.body.roles[0].description));
+  }
+
+  signUp(user: any): Observable<HttpResponse<any>> {
+    console.log(user);
+    
+    console.log('Dummy signup successful');
+    
+
+    return this.http.post<any>(`${this.url}signup`, { user }, { ...this.httpOptions, observe: 'response' }).pipe(
       catchError(this.handleError<any>('signUp'))
     );
   }
@@ -37,18 +95,11 @@ export class AuthService {
     );
   }
 
-  private setSession(authResult: HttpResponse<any>): void {
-    const expiresAt = new Date(authResult.body.expiration * 1000);
-    localStorage.setItem('token', authResult.body.token);
-    localStorage.setItem('expiration', expiresAt.toISOString());
-    const role = authResult.body.roles ? authResult.body.roles[0].description : '';
-    localStorage.setItem('role', JSON.stringify(role));
-  }
-
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('expiration');
     localStorage.removeItem('role');
+
   }
 
   public isLoggedIn(): boolean {

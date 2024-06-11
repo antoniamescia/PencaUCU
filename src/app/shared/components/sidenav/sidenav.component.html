@@ -1,0 +1,30 @@
+<div class="sidenav">
+    <div class="sidenav-header">
+      <img src="https://www.ucu.edu.uy/plantillas/images/logo_ucu.svg" alt="PencaUCU Logo" class="logo">
+      <div class="title">PencaUCU</div>
+    </div>
+    <div class="sidenav-menu">
+      <a class="menu-item" routerLink="/partidos">
+        <mat-icon>sports_soccer</mat-icon>
+        <span>Partidos</span>
+      </a>
+      <a class="menu-item" routerLink="/tabla-posiciones">
+        <mat-icon>format_list_numbered</mat-icon>
+        <span>Tabla de Posiciones</span>
+      </a>
+      <a class="menu-item" routerLink="/grupos">
+        <mat-icon>groups</mat-icon>
+        <span>Grupos</span>
+      </a>
+    </div>
+    <div class="sidenav-footer">
+      <a class="menu-item logout" (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </a>
+    </div>
+  </div>
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+  

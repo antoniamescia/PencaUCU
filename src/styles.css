@@ -1,14 +1,50 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+/* Importing Google Font DM Sans */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
 @import 'assets/styles/colors.css';
 
+/* Apply DM Sans font to the entire body */
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'DM Sans', sans-serif;
 }
 
-.mat-typography {
-  font-family: 'Poppins', sans-serif;
+/* Ensure all headings use DM Sans */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'DM Sans', sans-serif;
 }
 
-.mat-button, .mat-card, .mat-form-field, .mat-toolbar {
-  font-family: 'Poppins', sans-serif;
+/* Apply DM Sans font to all material components and specific form elements */
+:root,
+*,
+.mat-typography,
+.mat-button,
+.mat-card,
+.mat-form-field,
+.mat-toolbar,
+.mat-input-element,
+.mat-list-item,
+.mat-menu-item,
+.mat-radio-button,
+.mat-checkbox,
+.mat-chip,
+.mat-step-label,
+.mat-tab-label,
+.mat-tooltip,
+input,
+textarea,
+button,
+select,
+.mat-form-field-label,
+.mat-form-field-placeholder,
+.mat-form-field-infix,
+.mat-form-field-hint,
+.mat-hint,
+.mat-input-element,
+.mat-select-value,
+.mat-option-text {
+  font-family: 'DM Sans', sans-serif !important;
+}
+
+/* Ensure mat-icon uses Material Icons font */
+mat-icon {
+  font-family: 'Material Icons' !important;
 }
