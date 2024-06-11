@@ -1,0 +1,29 @@
+<app-sidenav></app-sidenav>
+<div class="content">
+  <router-outlet></router-outlet>
+  <div class="profile-button-container">
+    <button mat-icon-button [routerLink]="['/perfil']" class="profile-button">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+  </div>
+  <div class="tabs">
+    <app-match-tabs></app-match-tabs>
+  </div>
+  <app-match-card
+      [team1]="{
+        team_id: 1,
+        logo: 'https://upload.wikimedia.org/wikipedia/commons/8/8f/Flag_of_Argentina.png',
+        name: 'Argentina'
+      }"
+      [team2]="{
+        team_id: 2,
+        logo: 'https://upload.wikimedia.org/wikipedia/commons/f/fe/Flag_of_Uruguay.svg',
+        name: 'Uruguay'
+      }"
+      [team1Score]="0"
+      [team2Score]="0"
+      [matchStatus]="'Próximo'"
+      [matchDate]="'2021-06-18'"
+    >
+    </app-match-card>
+</div>

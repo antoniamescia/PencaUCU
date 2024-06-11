@@ -1,0 +1,42 @@
+<div class="login-container">
+    <mat-card>
+      <h1>¡Bienvenido a PencaUCU!</h1>
+      <p>Iniciá sesión para ingresar tus predicciones.</p>
+      <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Correo Electrónico</mat-label>
+          <input matInput placeholder="alumno@ucu.edu.uy" formControlName="email" type="email">
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Contraseña</mat-label>
+          <input matInput formControlName="password" [type]="hide ? 'password' : 'text'">
+          <button mat-icon-button matSuffix (click)="togglePasswordVisibility()" type="button">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+  
+        <div class="forgot-password">
+          <a href="#">Olvidé mi contraseña</a>
+        </div>
+  
+        <button mat-raised-button color="primary" class="full-width" type="submit" [disabled]="submitted">
+          <ng-container *ngIf="!submitted; else loading">
+            Iniciar sesión
+          </ng-container>
+          <ng-template #loading>
+            <mat-progress-spinner
+              [diameter]="20"
+              mode="indeterminate"
+              color="primary"
+              class="button-loader">
+            </mat-progress-spinner>
+          </ng-template>
+        </button>
+      </form>
+      <div class="signup">
+        ¿No tienes una cuenta? <a routerLink="/registro">Regístrate</a>
+      </div>
+    </mat-card>
+  </div>
+  
