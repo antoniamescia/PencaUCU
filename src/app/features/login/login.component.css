@@ -1,0 +1,53 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #fafafa;
+  }
+  
+  mat-card {
+    padding: 30px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    h1 {
+      font-size: 30px;
+      font-weight: 500;
+    }
+  }
+  
+  mat-form-field.full-width {
+    width: 100%;
+  }
+  
+  button.full-width {
+    width: 100%;
+    background-color: #173363;
+  }
+  
+  .forgot-password {
+    text-align: right;
+    margin-bottom: 20px;
+  }
+  
+  .signup {
+    margin-top: 20px;
+  }
+
+  a {
+    color: #173363;
+    font-weight: bold;
+  }
+
+  .snackbar-success {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .snackbar-error {
+    background-color: #f44336;
+    color: white;
+  }
+  

@@ -1,0 +1,26 @@
+<div class="match-card">
+    <div class="team-info">
+      <img [src]="match?.team_local_id" alt="{{ team1?.name }} logo" class="team-logo">
+      <div class="team-name">{{ team1?.name }}</div>
+    </div>
+    
+    <div class="match-status">
+      <div *ngIf="matchStatus === 'Próximo'">
+        <!-- <button class="action-button" (click)="addPrediction()">Ingresar</button> -->
+      </div>
+      <div *ngIf="matchStatus === 'En Curso' || matchStatus === 'Finalizado'">
+        <div class="score">{{ match?.goals_local }} - {{ match?.goals_visitor }}</div>
+      </div>
+    </div>
+    
+    <div class="team-info">
+      <img [src]="team1?.logo" alt="{{ team2?.name }} logo" class="team-logo">
+      <div class="team-name">{{ team2?.name }}</div>
+    </div>
+    
+    <div class="match-details">
+      <div>{{ match?.date }}</div>
+      <div>{{ matchStatus }}</div>
+    </div>
+  </div>
+  

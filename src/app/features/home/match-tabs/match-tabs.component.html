@@ -1,0 +1,15 @@
+<mat-tab-group>
+    <mat-tab label="Próximos">
+      <div *ngIf="upcomingMatches.length === 0">No upcoming matches</div>
+      <ng-container *ngFor="let match of upcomingMatches">
+        <app-match-card [match]="match"></app-match-card>
+      </ng-container>
+    </mat-tab>
+    <mat-tab label="Finalizados">
+      <div *ngIf="finishedMatches.length === 0">No finished matches</div>
+      <ng-container *ngFor="let match of finishedMatches">
+        <app-match-card [match]="match"></app-match-card>
+      </ng-container>
+    </mat-tab>
+</mat-tab-group>
+  

@@ -1,0 +1,14 @@
+/* match-tabs.component.css */
+.mat-tab-group {
+    margin-top: 10px;
+  }
+  
+  .mat-tab-label {
+    font-weight: bold;
+  }
+  
+  .mat-tab-body {
+    padding: 10px;
+  }
+  
+  

@@ -1,0 +1,35 @@
+<div class="prediction-container">
+    <div class="header">
+      <h2>Tu pronóstico</h2>
+      <button mat-button (click)="closeDialog()" class="back-button">Volver</button>
+    </div>
+    <!-- <mat-checkbox class="apply-checkbox" [(ngModel)]="applyToAllGroups">Aplicar en todos tus Grupos</mat-checkbox> -->
+    <div class="match-info">
+      <div class="team">
+        <img [src]="data.team1?.logo" alt="Team 1" class="team-logo">
+        <span class="team-name">{{ data.team1?.name }}</span>
+      </div>
+      <div class="score-controls">
+        <button mat-icon-button class="score-button" (click)="decrementScore('team1')">-</button>
+        <span class="score">{{ team1Score !== null ? team1Score : '?' }}</span>
+        <button mat-icon-button class="score-button" (click)="incrementScore('team1')">+</button>
+      </div>
+    </div>
+    <div class="match-info">
+      <div class="team">
+        <img [src]="data.team2?.logo" alt="Team 2" class="team-logo">
+        <span class="team-name">{{ data.team2?.name }}</span>
+      </div>
+      <div class="score-controls">
+        <button mat-icon-button class="score-button" (click)="decrementScore('team2')">-</button>
+        <span class="score">{{ team2Score !== null ? team2Score : '?' }}</span>
+        <button mat-icon-button class="score-button" (click)="incrementScore('team2')">+</button>
+      </div>
+    </div>
+    <div class="match-details">
+      <p>{{ data.matchDate | date:'dd/MM/yyyy HH:mm' }}</p>
+      <p>{{ data.groupInfo }}</p>
+    </div>
+    <button mat-raised-button color="primary" (click)="savePrediction()" class="save-button">Guardar</button>
+  </div>
+  
