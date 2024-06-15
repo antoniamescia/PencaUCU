@@ -10,7 +10,7 @@ export class AuthGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
-    const isLoggedIn = !!localStorage.getItem('token');
+    const isLoggedIn = !!localStorage.getItem('id_token');
     const allowedRoutes = ['/', '/registro'];
 
     if (isLoggedIn || allowedRoutes.includes(state.url)) {
