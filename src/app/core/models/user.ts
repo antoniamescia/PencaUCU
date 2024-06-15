@@ -1,9 +1,9 @@
 export interface User {
-  user_id: number;
   email: string;
+  document_id: string;
   last_name: string;
   first_name: string;
-  major?: string;
+  major: string;
   password: string;
-  role?: string;
+  role_id: number;
 }
