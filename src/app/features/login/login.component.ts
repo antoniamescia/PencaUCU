@@ -1,13 +1,13 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { AuthService } from 'src/app/core/services/auth.service';
+import { Component } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { AuthService } from "src/app/core/services/auth.service";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: "app-login",
+  templateUrl: "./login.component.html",
+  styleUrls: ["./login.component.css"],
 })
 export class LoginComponent {
   loginForm: FormGroup;
@@ -21,8 +21,8 @@ export class LoginComponent {
     private snackBar: MatSnackBar
   ) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]]
+      email: ["", [Validators.required, Validators.email]],
+      password: ["", [Validators.required]],
     });
   }
 
@@ -33,30 +33,27 @@ export class LoginComponent {
   login() {
     if (this.loginForm.valid) {
       this.submitted = true;
-      this.authService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe(
-        res => {
+
+      //Sanitize email and password
+      const email = this.loginForm.value.email.trim();
+      const password = this.loginForm.value.password.trim();
+
+      this.authService.login(email, password).subscribe(
+        (res) => {
+          console.log("RESPONSEE", res);
           if (res.status === 200) {
-            this.snackBar.open('Bienvenido!', 'Cerrar', {
+            this.snackBar.open("Bienvenido!", "Cerrar", {
               duration: 3000,
-              panelClass: ['snackbar-success']
-            });
-            this.router.navigate(['/partidos']);
+              panelClass: ["snackbar-success"],
+            });            
+            this.router.navigate(["/partidos"]);
           } else {
-            console.log('Login failed!', res);
-            
-            this.snackBar.open('Error al iniciar sesión', 'Cerrar', {
+            this.snackBar.open("Error al iniciar sesión", "Cerrar", {
               duration: 3000,
-              panelClass: ['snackbar-error']
+              panelClass: ["snackbar-error"],
             });
             this.submitted = false;
           }
-        },
-        err => {
-          this.snackBar.open('Login failed!', 'Close', {
-            duration: 3000,
-            panelClass: ['snackbar-error']
-          });
-          this.submitted = false;
         }
       );
     }

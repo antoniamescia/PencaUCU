@@ -2,7 +2,7 @@
     <mat-card>
       <h1>Regístrate en PencaUCU</h1>
       <p>Completa los datos para crear tu cuenta.</p>
-      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="signupForm" (ngSubmit)="signUp()">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Correo Electrónico</mat-label>
           <input matInput placeholder="alumno@ucu.edu.uy" formControlName="email" type="email">
@@ -10,6 +10,14 @@
             Regístrate con tu correo UCU.
           </mat-error>
         </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Cédula</mat-label>
+          <input matInput formControlName="document" type="text" (keyup)="formatCedula($event)" maxlength="9">
+          <mat-error *ngIf="signupForm.get('document')?.hasError('invalidCedula')">
+            Ingresa una cédula válida (formato: 1111111-1).
+          </mat-error>
+        </mat-form-field>        
   
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Nombre</mat-label>
