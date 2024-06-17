@@ -1,57 +1,81 @@
 .match-card {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #f8f8f8;
-    border-radius: 8px;
-    padding: 8px 16px;  /* Adjusted padding */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 16px;
-    width: 500px;
-  }
-  
-  .team-info {
-    display: flex;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f8f8f8;
+  border-radius: 8px;
+  padding: 8px 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 16px;
+  width: 800px;
+  max-width: 100%;
+}
+
+.team-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1; /* Give equal space to both team info sections */
+  text-align: center;
+}
+
+.team-logo {
+  width: 40px;
+  height: 30px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.team-name {
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 4px;
+}
+
+.match-status {
+  display: flex;
+  flex-direction: row; /* Align items in a row */
+  justify-content: center;
+  align-items: center;
+  flex: 1; /* Allow it to take up necessary space */
+  padding: 0 20px; /* Add padding to prevent overlap */
+}
+
+.score {
+  font-size: 24px; /* Increase font size for clarity */
+  font-weight: bold;
+  margin: 0 10px; /* Add margin around score for spacing */
+}
+
+.match-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex: 1;
+  font-size: 12px;
+  color: #888;
+}
+
+@media (max-width: 768px) {
+  .match-card {
     flex-direction: column;
-    align-items: center;
+    padding: 10px;
   }
-  
-  .team-logo {
-    width: 40px;  /* Adjusted size */
-    height: 40px;  /* Adjusted size */
-  }
-  
-  .team-name {
-    font-size: 14px;  /* Adjusted font size */
-    font-weight: bold;
-    margin-top: 4px;  /* Adjusted margin */
-  }
-  
-  .match-status {
-    display: flex;
-    align-items: center;
-  }
-  
-  .score {
-    font-size: 20px;  /* Adjusted font size */
-    font-weight: bold;
-  }
-  
-  .action-button {
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    padding: 6px 12px;  /* Adjusted padding */
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;  /* Adjusted font size */
-  }
-  
+
+  .team-info,
+  .match-status,
   .match-details {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    font-size: 12px;  /* Adjusted font size */
-    color: #888;
+    flex-basis: 100%;
+    margin-bottom: 10px;
   }
-  
+}
+
+.action-button {
+  background-color: #173363;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}

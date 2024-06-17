@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
+import { LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -18,6 +21,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -31,6 +35,11 @@ import { ProfileComponent } from './features/profile/profile.component';
 import { ScoreboardComponent } from './features/scoreboard/scoreboard.component';
 import { GroupsComponent } from './features/groups/groups.component';
 import { PredictionComponent } from './features/prediction/prediction.component';
+import { PredictionModalComponent } from './features/home/predictionmodal/predictionmodal.component';
+
+import { AuthInterceptor }  from './core/interceptors/auth.interceptor';
+
+registerLocaleData(localeEs);
 
 @NgModule({
   declarations: [
@@ -44,7 +53,8 @@ import { PredictionComponent } from './features/prediction/prediction.component'
     ProfileComponent,
     ScoreboardComponent,
     GroupsComponent,
-    PredictionComponent
+    PredictionComponent,
+    PredictionModalComponent
   ],
   imports: [
     BrowserModule,
@@ -65,10 +75,14 @@ import { PredictionComponent } from './features/prediction/prediction.component'
     MatToolbarModule,
     MatSnackBarModule,
     MatTabsModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSelectModule
     
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: LOCALE_ID, useValue: 'es' }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

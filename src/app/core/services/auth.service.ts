@@ -19,7 +19,6 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   login(email: string, password: string): Observable<HttpResponse<any>> {
-    console.log('Sending user data to backend:', { email, password });
     
     // Constructing the URL for the login API endpoint
     const loginUrl = `${this.url}/api/auth/signin`;
@@ -27,13 +26,7 @@ export class AuthService {
     return this.http.post<any>(loginUrl, { email, password }, { ...this.httpOptions, observe: 'response' })
       .pipe(
         tap(res => {
-          // Log the entire response
-          console.log('Full HTTP response:', res);
-
-          // Log just the status code
-          console.log('HTTP status code:', res.status);
-
-          // Assuming 'setSession' is your method to handle session setting
+         // Assuming 'setSession' is your method to handle session setting
           this.setSession(res);
         }),
         shareReplay(),
@@ -42,7 +35,6 @@ export class AuthService {
   }
 
   private setSession(authResult: any) { 
-    console.log('Setting session:', authResult);
 
     if (authResult.body && authResult.body.user_profile) {
         // Parse the expiration time; assumes expiration is in ISO format
@@ -58,9 +50,7 @@ export class AuthService {
         localStorage.setItem('user_last_name', authResult.body.user_profile.last_name);
         localStorage.setItem('user_major', authResult.body.user_profile.major);
         localStorage.setItem('user_role', authResult.body.user_profile.role);
-    
-        // Optional: Log for debugging purposes
-        console.log('Session set for user:', authResult.body.user_profile.email);
+        localStorage.setItem('document_id', authResult.body.user_profile.document_id);
     } else {
         console.error('Invalid authentication result:', authResult);
     }
@@ -69,9 +59,7 @@ export class AuthService {
   
 
   // Sign Up
-  signUp(user: User): Observable<HttpResponse<any>> {
-    console.log('Sending user data to backend:', user);
-    
+  signUp(user: User): Observable<HttpResponse<any>> { 
     const formattedUser = {
       email: user.email,
       document_id: user.document_id.replace('-', ''),

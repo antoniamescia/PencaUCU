@@ -1,21 +1,31 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { HttpClient } from "@angular/common/http";
+import { Component, OnInit } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
+import { Router } from "@angular/router";
+import { ChampionPredictionService } from "src/app/core/services/champion-prediction.service";
+import { PredictionModalComponent } from "./predictionmodal/predictionmodal.component";
+import { Match } from "src/app/core/models/match";
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: "app-home",
+  templateUrl: "./home.component.html",
+  styleUrls: ["./home.component.css"],
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   expanded = true;
-  user = {
-    name: 'John',
-    lastName: 'Doe',
-    avatar: 'path/to/avatar.png' // Make sure this path is correct
-  };
-new: Date|undefined;
+  new: Date | undefined;
+  notPlayedMatches: Match[] = [];
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+    private dialog: MatDialog,
+    private championshipPredictionService: ChampionPredictionService,
+  ) {}
+
+  ngOnInit() {
+    this.loadPredictions();
+  }
 
   matches = [
     {
@@ -23,15 +33,15 @@ new: Date|undefined;
       date: new Date(),
       team1_id: 1,
       team2_id: 2,
-      championship_id: 1
+      championship_id: 1,
     },
     {
       match_id: 2,
       date: new Date(),
       team1_id: 3,
       team2_id: 4,
-      championship_id: 1
-    }
+      championship_id: 1,
+    },
   ];
 
   toggleSidenav() {
@@ -40,10 +50,38 @@ new: Date|undefined;
 
   logout() {
     // Implement logout logic here
-    console.log('Logout clicked');
+    console.log("Logout clicked");
   }
 
   onOutletLoaded(event: any) {
     // Handle outlet loaded event if necessary
   }
+
+  loadPredictions() {
+    this.championshipPredictionService
+      .getPredictionChampionsByUserId()
+      .subscribe({
+        next: (response) => {
+          if (!response) {
+            console.log("No predictions found");
+            this.openPredictionModal();
+          } else {
+            console.log("Predictions:", response);
+          }
+        },
+        error: (err) => {
+          console.error("Error fetching predictions:", err);
+          this.openPredictionModal();
+        },
+      });
+  }
+
+  openPredictionModal() {
+    this.dialog.open(PredictionModalComponent, {
+      width: '250px',
+      data: { name: 'yourData' } // Pass any required data
+    });
+  }
+
+ 
 }

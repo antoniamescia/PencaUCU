@@ -1,38 +1,44 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, Inject, OnInit } from "@angular/core";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { ActivatedRoute, Router } from "@angular/router";
+
+import { PredictionService } from "src/app/core/services/prediction.service";
 
 @Component({
-  selector: 'app-prediction',
-  templateUrl: './prediction.component.html',
-  styleUrls: ['./prediction.component.css']
+  selector: "app-prediction",
+  templateUrl: "./prediction.component.html",
+  styleUrls: ["./prediction.component.css"],
 })
 export class PredictionComponent implements OnInit {
   team1Score: number | null = null;
   team2Score: number | null = null;
-  applyToAllGroups = false;
 
   constructor(
     public dialogRef: MatDialogRef<PredictionComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {}
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private predictionService: PredictionService,
+    private snackbar: MatSnackBar
+  ) {}
+
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    throw new Error("Method not implemented.");
   }
 
-  incrementScore(team: 'team1' | 'team2'): void {
-    if (team === 'team1') {
+  incrementScore(team: "team1" | "team2"): void {
+    if (team === "team1") {
       this.team1Score = (this.team1Score || 0) + 1;
     } else {
       this.team2Score = (this.team2Score || 0) + 1;
     }
   }
 
-  decrementScore(team: 'team1' | 'team2'): void {
-    if (team === 'team1') {
+  decrementScore(team: "team1" | "team2"): void {
+    if (team === "team1") {
       if (this.team1Score !== null && this.team1Score > 0) {
         this.team1Score--;
       }
-    } else if (team === 'team2') {
+    } else if (team === "team2") {
       if (this.team2Score !== null && this.team2Score > 0) {
         this.team2Score--;
       }
@@ -40,11 +46,58 @@ export class PredictionComponent implements OnInit {
   }
 
   savePrediction(): void {
-    // Save logic here, possibly send data to the server
-    this.dialogRef.close();
-  }
+    console.log("Saving prediction");
+    console.log(this.team1Score, this.team2Score);
+    
+    if (this.team1Score !== null && this.team2Score !== null) {
+      const matchId = this.data.matchId;
+      console.log("Match ID:", matchId);
+      
+  
+      // Prepare the data object to send
+      const predictionData = {
+        match_id: matchId,
+        goals_local: this.team1Score,
+        goals_visitor: this.team2Score
+      };
+  
+      this.predictionService.insertPrediction(predictionData).subscribe({
+        next: (response) => {
+          this.dialogRef.close(true); // Close the dialog and indicate success
+          this.snackbar.open("Predicción guardada correctamente", "Cerrar", {
+               duration: 3000,
+               panelClass: ["snackbar-success"],
+          });
+        },
+        error: (error) => {
+          this.dialogRef.close(false); // Close the dialog and indicate failure
+          this.snackbar.open("Error al guardar predicción", "Cerrar", {
+            duration: 3000,
+            panelClass: ["snackbar-success"],
+       });
+        }
+      });
+    } else {
+      console.error('Both scores must be set to save the prediction.');
+    }
+  }    
+  
 
   closeDialog(): void {
     this.dialogRef.close();
   }
 }
+
+// if (res.status === 200) {
+//   this.snackBar.open("Bienvenido!", "Cerrar", {
+//     duration: 3000,
+//     panelClass: ["snackbar-success"],
+//   });            
+//   this.router.navigate(["/partidos"]);
+// } else {
+//   this.snackBar.open("Error al iniciar sesión", "Cerrar", {
+//     duration: 3000,
+//     panelClass: ["snackbar-error"],
+//   });
+//   this.submitted = false;
+// }

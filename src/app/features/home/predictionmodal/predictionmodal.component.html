@@ -1,0 +1,44 @@
+<div class="champion-prediction">
+    <h1 mat-dialog-title>Ingresá tus predicciones</h1>
+    <button mat-icon-button class="close-button" mat-dialog-close aria-label="Close dialog">
+      <mat-icon>close</mat-icon>
+    </button>
+    
+    <div mat-dialog-content>
+        <form [formGroup]="predictionForm">
+          <mat-form-field appearance="fill">
+            <mat-label>Campeón</mat-label>
+            <mat-select formControlName="champion" (selectionChange)="onSelectTeam($event.value, 'champion')" [value]="selectedChampion">
+              <mat-option *ngFor="let team of teams" [value]="team">
+                <span class="mat-option-text">
+                  <img [src]="team.url_logo" alt="{{ team.name }}" width="24"> {{ team.name }}
+                </span>
+              </mat-option>
+            </mat-select>
+            <mat-select-trigger>
+              <img *ngIf="selectedChampion" [src]="selectedChampion.url_logo" width="24">
+            </mat-select-trigger>
+          </mat-form-field>
+      
+          <mat-form-field appearance="fill">
+            <mat-label>Subcampeón</mat-label>
+            <mat-select formControlName="subChampion" (selectionChange)="onSelectTeam($event.value, 'subChampion')" [value]="selectedSubChampion">
+              <mat-option *ngFor="let team of teams" [value]="team">
+                <span class="mat-option-text">
+                  <img [src]="team.url_logo" alt="{{ team.name }}" width="24"> {{ team.name }}
+                </span>
+              </mat-option>
+            </mat-select>
+            <mat-select-trigger>
+              <img *ngIf="selectedSubChampion" [src]="selectedSubChampion.url_logo" width="24">
+            </mat-select-trigger>
+          </mat-form-field>
+        </form>
+      </div>
+    
+      <div mat-dialog-actions>
+        <button mat-button (click)="onCancel()" color="basic">Cancelar</button>
+        <button mat-button [mat-dialog-close]="data" cdkFocusInitial [disabled]="!predictionForm?.valid" color="primary" (click)="postChampionsPrediction()">Guardar</button>
+      </div>
+      
+</div>

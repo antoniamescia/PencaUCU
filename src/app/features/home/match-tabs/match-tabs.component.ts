@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-// import { MatchService } from '../services/match.service';
 import { Match } from '../../../core/models/match';
+import { MatchesService } from 'src/app/core/services/matches.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-match-tabs',
@@ -12,40 +13,36 @@ export class MatchTabsComponent implements OnInit {
   upcomingMatches: Match[] = [];
   finishedMatches: Match[] = [];
 
-  // constructor(private matchService: MatchService) {}
+  constructor(private matchesService: MatchesService, private http: HttpClient) {}
 
   ngOnInit(): void {
-    // this.matches = this.matchService.getMatches();
-
-    this.matches = this.getMatches();
-    const now = new Date();
-    this.upcomingMatches = this.matches.filter(match => new Date(match.date) > now);
-    this.finishedMatches = this.matches.filter(match => new Date(match.date) <= now);
+    this.loadNotPlayedMatches();
+    this.loadPlayedMatches();
   }
 
-  getMatches(): Match[] {
-    // Implement the logic to get the matches
-    // DUMMY MOCK
-    return [
-      {
-        match_id: 1,
-        date: new Date(),
-        team_local_id: 1,
-        team_visitor_id: 2,
-        goals_local: 2,
-        goals_visitor: 1,
-        championship_id: 1
+
+  loadNotPlayedMatches() {
+    this.matchesService.getNotPlayedMatchesByChampionshipID().subscribe({
+      next: (matches) => {
+        console.log("Not played matches:", matches);
+        this.upcomingMatches = matches; // Assign the matches to the component property
       },
-      {
-        match_id: 2,
-        date: new Date(),
-        team_local_id: 3,
-        team_visitor_id: 4,
-        goals_local: 1,
-        goals_visitor: 1,
-        championship_id: 1
+      error: (error) => {
+        console.error("Error fetching not played matches:", error);
       }
-    ];
+    });
+  }
+
+  loadPlayedMatches() {
+    this.matchesService.getPlayedMatchesByChampionshipID().subscribe({
+      next: (matches) => {
+        console.log("Played matches:", matches);
+        this.finishedMatches = matches; // Assign the matches to the component property
+      },
+      error: (error) => {
+        console.error("Error fetching played matches:", error);
+      }
+    });
   }
 }
 
