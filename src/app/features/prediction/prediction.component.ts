@@ -71,7 +71,7 @@ export class PredictionComponent implements OnInit {
         },
         error: (error) => {
           this.dialogRef.close(false); // Close the dialog and indicate failure
-          this.snackbar.open("Error al guardar predicción", "Cerrar", {
+          this.snackbar.open("Error al", "Cerrar", {
             duration: 3000,
             panelClass: ["snackbar-success"],
        });

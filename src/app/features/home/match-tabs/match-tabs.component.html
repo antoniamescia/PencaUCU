@@ -5,7 +5,7 @@
         <span>No hay próximos partidos!</span>
       </div>
       <ng-container *ngFor="let match of upcomingMatches">
-        <app-match-card [match]="match"></app-match-card>
+        <app-match-card [match]="match" [key]="matchCardKey"></app-match-card>
       </ng-container>
     </mat-tab>
     <mat-tab label="Finalizados">

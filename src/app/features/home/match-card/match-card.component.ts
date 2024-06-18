@@ -9,6 +9,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { TeamsService } from "src/app/core/services/teams.service";
 import { HttpClient } from "@angular/common/http";
 import { PredictionService } from "src/app/core/services/prediction.service";
+import { Prediction } from "src/app/core/models/prediction";
 
 @Component({
   selector: "app-match-card",
@@ -22,6 +23,8 @@ export class MatchCardComponent implements OnInit {
   team2?: Team;
   match_date = this.match?.match_date.toDateString();
   predictionExists: boolean = false;  // Flag to check if prediction exists
+  prediction?: Prediction;
+  @Input() key: number = 0;
 
 
   constructor(
@@ -44,7 +47,6 @@ export class MatchCardComponent implements OnInit {
     this.teamsService.getTeamById(team1_id).subscribe({
       next: (team) => {
         this.team1 = team;
-        console.log("team1", this.team1);
       },
       error: (error) => {
         console.error("Error fetching team1:", error);
@@ -54,7 +56,6 @@ export class MatchCardComponent implements OnInit {
     this.teamsService.getTeamById(team2_id).subscribe({
       next: (team) => {
         this.team2 = team;
-        console.log("team2", this.team2);
       },
       error: (error) => {
         console.error("Error fetching team2:", error);
@@ -107,15 +108,32 @@ export class MatchCardComponent implements OnInit {
         console.log("The dialog was closed", result);
       });
     }
+    //refresh tab
+    
+  }
+
+  refreschMatchCard(): void {
+    this.key++;
   }
 
   getPrediction(): void {
-    this.predictionService.getPredictionByUserIdAndChampionshipId().subscribe(predictions => {
-      // Check if there's a prediction for the current match
-      this.predictionExists = predictions.some((pred: { match_id: number | undefined; }) => pred.match_id === this.match?.match_id);
-    });
+    this.predictionService.getPredictionByUserIdAndChampionshipId().subscribe((predictions: Prediction[]) => {
+      
+      this.predictionExists = predictions.some((pred: Prediction) => {
+        return pred.match_id === this.match?.match_id;
+      });
 
-    console.log("Prediction exists:", this.predictionExists);
-    
+      this.prediction = predictions.find((pred: Prediction) => {
+        const matchFound = pred.match_id === this.match?.match_id;
+        if (matchFound) {
+          console.log("Match found for ID:", pred.match_id); // Log when a match is found
+        }
+        return matchFound;
+      });
+
+    });
   }
+
+
+
 }

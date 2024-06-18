@@ -7,4 +7,6 @@ export interface Match {
   goals_visitor: number;
   championship_id: number;
   stage_id?: number;
+  stage_name?: string;
+  group_name?: string;
 }

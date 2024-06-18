@@ -11,12 +11,26 @@
   max-width: 100%;
 }
 
+.match-info {
+  display: flex;
+  align-items: center;
+  flex: 3; /* Adjusted to give more space */
+}
+
+.stage-group {
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px; /* Space from the team info */
+  font-size: 12px;
+  color: #666;
+}
+
 .team-info {
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex: 1; /* Give equal space to both team info sections */
   text-align: center;
+  flex: 1;
 }
 
 .team-logo {
@@ -34,17 +48,10 @@
 
 .match-status {
   display: flex;
-  flex-direction: row; /* Align items in a row */
   justify-content: center;
   align-items: center;
-  flex: 1; /* Allow it to take up necessary space */
-  padding: 0 20px; /* Add padding to prevent overlap */
-}
-
-.score {
-  font-size: 24px; /* Increase font size for clarity */
-  font-weight: bold;
-  margin: 0 10px; /* Add margin around score for spacing */
+  flex: 1;
+  padding: 0 20px;
 }
 
 .match-details {
@@ -62,15 +69,17 @@
     padding: 10px;
   }
 
-  .team-info,
-  .match-status,
-  .match-details {
+  .match-info, .match-status, .match-details {
     flex-basis: 100%;
     margin-bottom: 10px;
   }
+
+  .stage-group {
+    margin-right: 0; /* Remove margin on mobile */
+  }
 }
 
-.action-button {
+.action-button, .edit-button {
   background-color: #173363;
   color: white;
   border: none;
@@ -78,4 +87,15 @@
   border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+
+.edit-button {
+  background-color: transparent;
+  color: #173363;
+}
+
+.edit-button i {
+  margin-right: 5px;
 }

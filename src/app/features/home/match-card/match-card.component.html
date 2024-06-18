@@ -1,4 +1,4 @@
-<div class="match-card">
+<!-- <div class="match-card">
     <div class="team-info">
       <img [src]="team1?.url_logo" alt="{{ team1?.name }} logo" class="team-logo">
       <div class="team-name">{{ team1?.name }}</div>
@@ -6,7 +6,11 @@
     
     <div class="match-status">
       <div *ngIf="matchStatus === 'Próximo'">
-        <button class="action-button" (click)="addPrediction()">Ingresar Predicción</button>
+        <button class="action-button" *ngIf="!predictionExists" (click)="addPrediction()">Ingresar Predicción</button>
+        <button class="action-button" *ngIf="predictionExists" (click)="addPrediction()">Editar Predicción</button>
+      </div>
+      <div *ngIf="predictionExists" class="prediction-details">
+        Tu Predicción: {{ prediction?.goals_local }} - {{ prediction?.goals_visitor }}
       </div>
       <div *ngIf="matchStatus === 'En Curso' || matchStatus === 'Finalizado'">
         <div class="score">{{ match?.goals_local }} - {{ match?.goals_visitor }}</div>
@@ -23,4 +27,58 @@
       <div>{{ matchStatus }}</div>
     </div>
   </div>
-  
+   -->
+
+<div class="match-card">
+  <div class="team-info">
+    <img
+      [src]="team1?.url_logo"
+      alt="{{ team1?.name }} logo"
+      class="team-logo"
+    />
+    <div class="team-name">{{ team1?.name }}</div>
+  </div>
+
+  <div class="match-status">
+    <div *ngIf="matchStatus === 'Próximo'">
+      <button
+        class="action-button"
+        *ngIf="!predictionExists"
+        (click)="addPrediction()"
+      >
+        Ingresar Predicción
+      </button>
+      <div *ngIf="predictionExists" class="prediction-details">
+        Tu Predicción: {{ prediction?.goals_local }} -
+        {{ prediction?.goals_visitor }}
+        <button class="edit-button" (click)="addPrediction()">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div *ngIf="matchStatus === 'En Curso' || matchStatus === 'Finalizado'">
+      <div class="score">
+        {{ match?.goals_local }} - {{ match?.goals_visitor }}
+      </div>
+    </div>
+  </div>
+
+  <div class="team-info">
+    <img
+      [src]="team2?.url_logo"
+      alt="{{ team2?.name }} logo"
+      class="team-logo"
+    />
+    <div class="team-name">{{ team2?.name }}</div>
+  </div>
+
+  <div class="match-details">
+    <div>
+      {{
+        match?.match_date
+          | date : "d 'de' MMMM 'de' yyyy, H'hs'" : "+0000" : "es"
+      }}
+    </div>
+    <div>{{ matchStatus }}</div>
+  </div>
+</div>

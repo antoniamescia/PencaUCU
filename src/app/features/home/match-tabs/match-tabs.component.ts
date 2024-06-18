@@ -11,15 +11,19 @@ import { HttpClient } from '@angular/common/http';
 export class MatchTabsComponent implements OnInit {
   matches: Match[] = [];
   upcomingMatches: Match[] = [];
-  finishedMatches: Match[] = [];
+  finishedMatches: Match[] = [];matchCardKey = 0;
 
+  
   constructor(private matchesService: MatchesService, private http: HttpClient) {}
-
+  
   ngOnInit(): void {
     this.loadNotPlayedMatches();
     this.loadPlayedMatches();
   }
-
+  
+  updateMatchCards() {
+    this.matchCardKey++; // Increment to refresh match cards
+  }
 
   loadNotPlayedMatches() {
     this.matchesService.getNotPlayedMatchesByChampionshipID().subscribe({
