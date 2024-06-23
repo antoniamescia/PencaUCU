@@ -1,29 +1,36 @@
-import { Component, OnInit } from '@angular/core';
-import { Match } from '../../../core/models/match';
-import { MatchesService } from 'src/app/core/services/matches.service';
-import { HttpClient } from '@angular/common/http';
+import { Component, Input, OnInit } from "@angular/core";
+import { Match } from "../../../core/models/match";
+import { MatchesService } from "src/app/core/services/matches.service";
+import { HttpClient } from "@angular/common/http";
+import { AuthService } from "src/app/core/services/auth.service";
 
 @Component({
-  selector: 'app-match-tabs',
-  templateUrl: './match-tabs.component.html',
-  styleUrls: ['./match-tabs.component.css']
+  selector: "app-match-tabs",
+  templateUrl: "./match-tabs.component.html",
+  styleUrls: ["./match-tabs.component.css"],
 })
 export class MatchTabsComponent implements OnInit {
   matches: Match[] = [];
   upcomingMatches: Match[] = [];
   finishedMatches: Match[] = [];
-  groupedUpcomingMatches: { [key: string]: any } = {};  
-  groupedFinishedMatches: { [key: string]: any } = {};  
+  groupedUpcomingMatches: { [key: string]: any } = {};
+  groupedFinishedMatches: { [key: string]: any } = {};
   matchCardKey = 0;
+  @Input() isAdmin?: boolean;
 
-  
-  constructor(private matchesService: MatchesService, private http: HttpClient) {}
-  
+  constructor(
+    private matchesService: MatchesService,
+    private http: HttpClient,
+    private authService: AuthService
+  ) {}
+
   ngOnInit(): void {
     this.loadNotPlayedMatches();
     this.loadPlayedMatches();
+    console.log(" match tabs isAdmin", this.isAdmin);
+    
   }
-  
+
   updateMatchCards() {
     this.matchCardKey++; // Increment to refresh match cards
   }
@@ -33,11 +40,11 @@ export class MatchTabsComponent implements OnInit {
       next: (matches) => {
         console.log("Not played matches:", matches);
         this.upcomingMatches = matches; // Assign the matches to the component property
-        this.groupMatches(this.upcomingMatches, 'upcoming');
+        this.groupMatches(this.upcomingMatches, "upcoming");
       },
       error: (error) => {
         console.error("Error fetching not played matches:", error);
-      }
+      },
     });
   }
 
@@ -46,34 +53,36 @@ export class MatchTabsComponent implements OnInit {
       next: (matches) => {
         console.log("Played matches:", matches);
         this.finishedMatches = matches; // Assign the matches to the component property
-        this.groupMatches(this.upcomingMatches, 'finished');
+        this.groupMatches(this.upcomingMatches, "finished");
       },
       error: (error) => {
         console.error("Error fetching played matches:", error);
-      }
+      },
     });
   }
 
-  groupMatches(matches: Match[], type: 'upcoming' | 'finished') {
-    const grouped: { [key: string]: Match[] } = matches.reduce((groups: { [key: string]: Match[] }, match) => {
-      const groupName = `${match.group_name} | ${match.stage_name}`;
-      if (!groups[groupName]) {
-        groups[groupName] = [];
-      }
-      groups[groupName].push(match);
-      return groups;
-    }, {});
+  groupMatches(matches: Match[], type: "upcoming" | "finished") {
+    const grouped: { [key: string]: Match[] } = matches.reduce(
+      (groups: { [key: string]: Match[] }, match) => {
+        const groupName = `${match.group_name} | ${match.stage_name}`;
+        if (!groups[groupName]) {
+          groups[groupName] = [];
+        }
+        groups[groupName].push(match);
+        return groups;
+      },
+      {}
+    );
 
-    if (type === 'upcoming') {
+    if (type === "upcoming") {
       this.groupedUpcomingMatches = grouped;
     } else {
       this.groupedFinishedMatches = grouped;
     }
-    console.log('Grouped matches:', grouped);
-    console.log('Grouped upcoming matches:', this.groupedUpcomingMatches);
-    console.log('Grouped finished matches:', this.groupedFinishedMatches);
-    
-    
+    console.log("Grouped matches:", grouped);
+    console.log("Grouped upcoming matches:", this.groupedUpcomingMatches);
+    console.log("Grouped finished matches:", this.groupedFinishedMatches);
   }
-}
 
+
+}

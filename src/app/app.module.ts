@@ -22,6 +22,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -42,6 +45,10 @@ import { AdminHomeComponent } from './features/admin-home/admin-home.component';
 import { AdminSidenavComponent } from './features/admin-home/admin-sidenav/admin-sidenav.component';
 import { CrearPartidoComponent } from './features/admin-home/crear-partido/crear-partido.component';
 import { CargarResultadoComponent } from './features/admin-home/cargar-resultado/cargar-resultado.component';
+import { AdminMatchTabsComponent } from './features/admin-home/admin-match-tabs/admin-match-tabs.component';
+import { AdminMatchCardComponent } from './features/admin-home/admin-match-card/admin-match-card.component';
+import { CreateMatchModalComponent } from './features/admin-home/create-match-modal/create-match-modal.component';
+import { DeleteMatchModalComponent } from './features/admin-home/delete-match-modal/delete-match-modal.component';
 
 registerLocaleData(localeEs);
 
@@ -62,7 +69,11 @@ registerLocaleData(localeEs);
     AdminHomeComponent,
     AdminSidenavComponent,
     CrearPartidoComponent,
-    CargarResultadoComponent
+    CargarResultadoComponent,
+    AdminMatchTabsComponent,
+    AdminMatchCardComponent,
+    CreateMatchModalComponent,
+    DeleteMatchModalComponent
   ],
   imports: [
     BrowserModule,
@@ -84,7 +95,9 @@ registerLocaleData(localeEs);
     MatSnackBarModule,
     MatTabsModule,
     MatDialogModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule
     
   ],
   providers: [

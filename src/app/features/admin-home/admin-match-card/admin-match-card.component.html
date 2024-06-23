@@ -1,0 +1,50 @@
+
+<div class="match-card">
+    <div class="team-info">
+      <img
+        [src]="team1?.url_logo"
+        alt="{{ team1?.name }} logo"
+        class="team-logo"
+      />
+      <div class="team-name">{{ team1?.name }}</div>
+    </div>
+  
+    <div class="match-status">
+      <div *ngIf="matchStatus === 'Próximo'" class="action-buttons">
+        <button mat-icon-button class="edit-button" (click)="editMatch()">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button class="delete-button" (click)="deleteMatch()">
+            <mat-icon>delete</mat-icon>
+          </button>
+      </div>
+      <div *ngIf="matchStatus === 'En curso'" class="live-indicator">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Red_circle.gif" alt="Live" class="live-gif">
+        <span>Live</span>
+      </div>
+      <div *ngIf="matchStatus === 'Finalizado'">
+        <button class="action-button" (click)="enterMatchResults()">Ingresar Resultados</button>
+      </div>
+    </div>
+  
+    <div class="team-info">
+      <img
+        [src]="team2?.url_logo"
+        alt="{{ team2?.name }} logo"
+        class="team-logo"
+      />
+      <div class="team-name">{{ team2?.name }}</div>
+    </div>
+  
+    <div class="match-details">
+      <div>
+        {{
+          match?.match_date
+            | date : "d 'de' MMMM 'de' yyyy, H'hs'" : "+0000" : "es"
+        }}
+      </div>
+      <div>{{ matchStatus }}</div>
+    </div>
+  </div>
+  
+  

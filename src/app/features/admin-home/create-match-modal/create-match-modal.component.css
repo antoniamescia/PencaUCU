@@ -1,0 +1,53 @@
+.mat-dialog-content {
+  overflow-y: auto;
+}
+
+.form-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.create-match-form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.date-time-row,
+.teams-row,
+.stage-group-row {
+  display: contents;
+}
+
+.form-field {
+  width: 100%; /* Ensures the form fields take up all available space within their grid cell */
+}
+
+@media (max-width: 768px) {
+  .create-match-form {
+    grid-template-columns: 1fr; /* Stack form fields in a single column on smaller screens */
+  }
+}
+
+.actions {
+    display: flex;
+    justify-content: center; /* Centers the button horizontally */
+    padding: 20px; /* Adds padding around the button for spacing */
+  }
+  
+  button.crear-button {
+    background-color: #173363; /* Sets a blue background */
+    color: white !important; /* Text color set to white */
+    border: none; /* No border */
+    padding: 10px 20px; /* Padding inside the button */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    cursor: pointer; /* Cursor indicates clickable item */
+    font-size: 16px; /* Increases font size for better readability */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  }
+  
+  button:hover {
+    background-color: #1565c0; /* Darker blue on hover for interaction feedback */
+  }
+  

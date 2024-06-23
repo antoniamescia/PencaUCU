@@ -8,7 +8,8 @@
       <div *ngFor="let group of groupedUpcomingMatches | keyvalue">
         <div class="group-title">{{ group.key }}</div>
         <ng-container *ngFor="let match of group.value">
-          <app-match-card [match]="match"></app-match-card>
+          <app-admin-match-card *ngIf="isAdmin" [match]="match"></app-admin-match-card>
+          <app-match-card *ngIf="!isAdmin" [match]="match"></app-match-card>
         </ng-container>
       </div>
     </div>
@@ -21,7 +22,8 @@
       <div *ngFor="let group of groupedFinishedMatches | keyvalue">
         <div class="group-title">{{ group.key }}</div>
         <ng-container *ngFor="let match of group.value">
-          <app-match-card [match]="match"></app-match-card>
+          <app-admin-match-card *ngIf="isAdmin" [match]="match"></app-admin-match-card>
+          <app-match-card *ngIf="!isAdmin" [match]="match"></app-match-card>
         </ng-container>
       </div>
     </div>

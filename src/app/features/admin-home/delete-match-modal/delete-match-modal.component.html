@@ -1,0 +1,10 @@
+<div class="content">
+    <h2 mat-dialog-title>Eliminar partido</h2>
+    <div mat-dialog-content>
+      <p class="confirmation-text">¿Estás seguro que quieres eliminar este partido?</p>
+    </div>
+</div>
+<div mat-dialog-actions class="actions">
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-button color="warn" (click)="deleteMatch()">Eliminar</button>
+</div>

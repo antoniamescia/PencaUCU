@@ -15,21 +15,27 @@ body {
     padding-bottom: 20px; 
   }
   
-  .profile-button {
-    background: #173363;
-    border-radius: 50%;
+  .crear-partido-button {
+    background: #5cb85c; /* A green background for a creation button */
+    border-radius: 4px; /* Mildly rounded corners for a rectangular shape */
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    width: 48px; /* Adjust the size as needed */
-    height: 48px; /* Adjust the size as needed */
+    width: auto; /* Automatic width to fit content */
+    height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white; /* Ensure icon color contrasts with the background */
+    color: white; /* White text for visibility */
+    padding: 0 20px; /* Horizontal padding */
+    font-size: 16px; /* Font size for the text inside the button */
+    cursor: pointer; /* Pointer cursor on hover */
   }
   
-  .profile-button mat-icon {
-    font-size: 24px; /* Adjust icon size as needed */
+  .crear-partido-button mat-icon {
+    font-size: 24px; /* Icon size */
+    margin-right: 8px; /* Space between icon and text */
   }
+  
+  
   
   .content {
     padding-top: 40px;
