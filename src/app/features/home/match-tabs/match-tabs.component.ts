@@ -11,7 +11,10 @@ import { HttpClient } from '@angular/common/http';
 export class MatchTabsComponent implements OnInit {
   matches: Match[] = [];
   upcomingMatches: Match[] = [];
-  finishedMatches: Match[] = [];matchCardKey = 0;
+  finishedMatches: Match[] = [];
+  groupedUpcomingMatches: { [key: string]: any } = {};  
+  groupedFinishedMatches: { [key: string]: any } = {};  
+  matchCardKey = 0;
 
   
   constructor(private matchesService: MatchesService, private http: HttpClient) {}
@@ -30,6 +33,7 @@ export class MatchTabsComponent implements OnInit {
       next: (matches) => {
         console.log("Not played matches:", matches);
         this.upcomingMatches = matches; // Assign the matches to the component property
+        this.groupMatches(this.upcomingMatches, 'upcoming');
       },
       error: (error) => {
         console.error("Error fetching not played matches:", error);
@@ -42,11 +46,34 @@ export class MatchTabsComponent implements OnInit {
       next: (matches) => {
         console.log("Played matches:", matches);
         this.finishedMatches = matches; // Assign the matches to the component property
+        this.groupMatches(this.upcomingMatches, 'finished');
       },
       error: (error) => {
         console.error("Error fetching played matches:", error);
       }
     });
+  }
+
+  groupMatches(matches: Match[], type: 'upcoming' | 'finished') {
+    const grouped: { [key: string]: Match[] } = matches.reduce((groups: { [key: string]: Match[] }, match) => {
+      const groupName = `${match.group_name} | ${match.stage_name}`;
+      if (!groups[groupName]) {
+        groups[groupName] = [];
+      }
+      groups[groupName].push(match);
+      return groups;
+    }, {});
+
+    if (type === 'upcoming') {
+      this.groupedUpcomingMatches = grouped;
+    } else {
+      this.groupedFinishedMatches = grouped;
+    }
+    console.log('Grouped matches:', grouped);
+    console.log('Grouped upcoming matches:', this.groupedUpcomingMatches);
+    console.log('Grouped finished matches:', this.groupedFinishedMatches);
+    
+    
   }
 }
 

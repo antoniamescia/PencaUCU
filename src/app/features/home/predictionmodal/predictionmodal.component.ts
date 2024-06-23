@@ -96,6 +96,8 @@ export class PredictionModalComponent implements OnInit {
         .subscribe({
           next: (response) => {
             console.log("Prediction saved successfully", response);
+            // Reload window
+            window.location.reload();
           },
           error: (error) => {
             console.error("Failed to save prediction", error);
@@ -104,5 +106,6 @@ export class PredictionModalComponent implements OnInit {
     } else {
       console.error("Form is invalid");
     }
+    window.location.reload();
   }
 }

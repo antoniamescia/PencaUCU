@@ -63,13 +63,14 @@ export class MatchCardComponent implements OnInit {
     });
   }
 
+
   getMatchStatusText(): string {
     if (!this.match || !this.match.match_date) {
       return "";
     }
     const matchDate = new Date(this.match.match_date);
     const currentDate = new Date();
-
+  
     const isSameDay = (date1: Date, date2: Date): boolean => {
       return (
         date1.getFullYear() === date2.getFullYear() &&
@@ -77,18 +78,24 @@ export class MatchCardComponent implements OnInit {
         date1.getDate() === date2.getDate()
       );
     };
-
-    if (
-      matchDate.getTime() < currentDate.getTime() &&
-      !isSameDay(matchDate, currentDate)
-    ) {
-      return "Finalizado";
-    } else if (isSameDay(matchDate, currentDate)) {
-      return "En curso";
+  
+    const isTimeEqualOrLater = (date1: Date, date2: Date): boolean => {
+      return date1.getHours() > date2.getHours() ||
+             (date1.getHours() === date2.getHours() && date1.getMinutes() >= date2.getMinutes());
+    };
+  
+    if (isSameDay(matchDate, currentDate)) {
+      if (isTimeEqualOrLater(currentDate, matchDate)) {
+        return "En curso";
+      }
+      return "Próximo"; // Si es el mismo día pero la hora del partido aún no ha llegado.
+    } else if (matchDate.getTime() < currentDate.getTime()) {
+      return "Finalizado"; // El partido ya ocurrió en una fecha anterior.
     } else {
-      return "Próximo";
+      return "Próximo"; // Fecha del partido aún no ha llegado.
     }
   }
+  
 
   addPrediction(): void {    
     if (this.match && this.team1 && this.team2) {

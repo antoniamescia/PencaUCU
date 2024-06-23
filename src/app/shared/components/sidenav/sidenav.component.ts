@@ -10,11 +10,6 @@ import { AuthService } from 'src/app/core/services/auth.service';
 })
 export class SidenavComponent {
   expanded = true;
-  user = {
-    name: 'John',
-    lastName: 'Doe',
-    avatar: 'path/to/avatar.png' // Make sure this path is correct
-  };
 
   constructor(private router: Router, private authService: AuthService) {}
 

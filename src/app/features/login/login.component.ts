@@ -30,32 +30,57 @@ export class LoginComponent {
     this.hide = !this.hide;
   }
 
+  // login() {
+  //   if (this.loginForm.valid) {
+  //     this.submitted = true;
+
+  //     //Sanitize email and password
+  //     const email = this.loginForm.value.email.trim();
+  //     const password = this.loginForm.value.password.trim();
+
+  //     this.authService.login(email, password).subscribe(
+  //       (res) => {
+  //         console.log("RESPONSEE", res);
+  //         if (res.status === 200) {
+  //           this.snackBar.open("Bienvenido!", "Cerrar", {
+  //             duration: 3000,
+  //             panelClass: ["snackbar-success"],
+  //           });            
+  //           this.router.navigate(["/partidos"]);
+  //         } else {
+  //           this.snackBar.open("Error al iniciar sesión", "Cerrar", {
+  //             duration: 3000,
+  //             panelClass: ["snackbar-error"],
+  //           });
+  //           this.submitted = false;
+  //         }
+  //       }
+  //     );
+  //   }
+  // }
+
   login() {
     if (this.loginForm.valid) {
       this.submitted = true;
-
-      //Sanitize email and password
       const email = this.loginForm.value.email.trim();
       const password = this.loginForm.value.password.trim();
 
-      this.authService.login(email, password).subscribe(
-        (res) => {
-          console.log("RESPONSEE", res);
+      this.authService.login(email, password).subscribe({
+        next: (res) => {
           if (res.status === 200) {
-            this.snackBar.open("Bienvenido!", "Cerrar", {
-              duration: 3000,
-              panelClass: ["snackbar-success"],
-            });            
-            this.router.navigate(["/partidos"]);
+            localStorage.setItem('user_role_id', res.body.user_role_id);  // Store user role
+            this.snackBar.open("Bienvenido!", "Cerrar", { duration: 3000, panelClass: ["snackbar-success"] });
+            this.authService.redirectUser();  // Redirect based on role
           } else {
-            this.snackBar.open("Error al iniciar sesión", "Cerrar", {
-              duration: 3000,
-              panelClass: ["snackbar-error"],
-            });
+            this.snackBar.open("Error al iniciar sesión", "Cerrar", { duration: 3000, panelClass: ["snackbar-error"] });
             this.submitted = false;
           }
+        },
+        error: (err) => {
+          this.snackBar.open("Login failed!", "Close", { duration: 3000, panelClass: ["snackbar-error"] });
+          this.submitted = false;
         }
-      );
+      });
     }
   }
 }

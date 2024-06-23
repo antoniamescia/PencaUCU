@@ -38,6 +38,10 @@ import { PredictionComponent } from './features/prediction/prediction.component'
 import { PredictionModalComponent } from './features/home/predictionmodal/predictionmodal.component';
 
 import { AuthInterceptor }  from './core/interceptors/auth.interceptor';
+import { AdminHomeComponent } from './features/admin-home/admin-home.component';
+import { AdminSidenavComponent } from './features/admin-home/admin-sidenav/admin-sidenav.component';
+import { CrearPartidoComponent } from './features/admin-home/crear-partido/crear-partido.component';
+import { CargarResultadoComponent } from './features/admin-home/cargar-resultado/cargar-resultado.component';
 
 registerLocaleData(localeEs);
 
@@ -54,7 +58,11 @@ registerLocaleData(localeEs);
     ScoreboardComponent,
     GroupsComponent,
     PredictionComponent,
-    PredictionModalComponent
+    PredictionModalComponent,
+    AdminHomeComponent,
+    AdminSidenavComponent,
+    CrearPartidoComponent,
+    CargarResultadoComponent
   ],
   imports: [
     BrowserModule,

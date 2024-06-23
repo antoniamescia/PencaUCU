@@ -1,33 +1,43 @@
-/* match-tabs.component.css */
-.mat-tab-group {
-    margin-top: 10px;
-  }
-  
-  .mat-tab-label {
-    font-weight: bold;
-  }
-  
-  .mat-tab-body {
-    padding: 10px;
-  }
-  
-  
-  .no-matches-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%; /* Make sure this is enough to show all contents */
-    text-align: center; /* Centers the text */
-    padding: 20px; /* Adjust padding to avoid cutting off the icon */
-  }
-  
-  .mat-icon {
-    font-size: 24px; /* Adjust if necessary */
-    height: 1em; /* Ensure the icon's height is proportional to its container */
-    width: 1em; /* Ensure the icon's width is proportional to its container */
-    line-height: 1; /* Adjust line height to avoid clipping */
-    margin-bottom: 10px; /* Space between the icon and the text */
-    display: block; /* Ensures the icon is on a new line */
-  }
-  
+
+
+.mat-tab-label {
+  font-weight: bold;
+}
+.mat-tab-body {
+  padding: 10px;
+}
+
+.no-matches-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%; /* Make sure this is enough to show all contents */
+  text-align: center; /* Centers the text */
+  padding: 20px; /* Adjust padding to avoid cutting off the icon */
+}
+
+.mat-icon {
+  font-size: 24px; /* Adjust if necessary */
+  height: 1em; /* Ensure the icon's height is proportional to its container */
+  width: 1em; /* Ensure the icon's width is proportional to its container */
+  line-height: 1; /* Adjust line height to avoid clipping */
+  margin-bottom: 10px; /* Space between the icon and the text */
+  display: block; /* Ensures the icon is on a new line */
+}
+
+.group-title {
+  font-size: 20px; /* Ajusta el tamaño de la fuente según tus preferencias */
+  font-weight: bold; /* Hace que el texto sea en negrita */
+  margin-top: 20px;
+  margin-bottom: 10px;
+  text-align: center; /* Centra el texto si es necesario */
+  color: #173363; /* Cambia el color según tu esquema de diseño */
+}
+
+.match-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Alinea los elementos al centro horizontalmente */
+  width: 100%; /* Asegura que el contenedor tome todo el ancho disponible */
+}

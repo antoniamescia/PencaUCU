@@ -1,20 +1,29 @@
-   <mat-tab-group>
-    <mat-tab label="Próximos">
-      <div *ngIf="!upcomingMatches" class="no-matches-container">
-        <mat-icon class="no-matches-icon">sports_soccer</mat-icon>
-        <span>No hay próximos partidos!</span>
+<mat-tab-group>
+  <mat-tab label="Próximos">
+    <div *ngIf="!upcomingMatches" class="no-matches-container">
+      <mat-icon class="no-matches-icon">sports_soccer</mat-icon>
+      <span>No hay próximos partidos!</span>
+    </div>
+    <div class="match-container">
+      <div *ngFor="let group of groupedUpcomingMatches | keyvalue">
+        <div class="group-title">{{ group.key }}</div>
+        <ng-container *ngFor="let match of group.value">
+          <app-match-card [match]="match"></app-match-card>
+        </ng-container>
       </div>
-      <ng-container *ngFor="let match of upcomingMatches">
-        <app-match-card [match]="match" [key]="matchCardKey"></app-match-card>
-      </ng-container>
-    </mat-tab>
-    <mat-tab label="Finalizados">
-      <div *ngIf="!finishedMatches" class="no-matches-container">
-        <span>No finished matches</span>
+    </div>
+  </mat-tab>
+  <mat-tab label="Finalizados">
+    <div *ngIf="!finishedMatches" class="no-matches-container">
+      <span>No hay partidos finalizados</span>
+    </div>
+    <div>
+      <div *ngFor="let group of groupedFinishedMatches | keyvalue">
+        <div class="group-title">{{ group.key }}</div>
+        <ng-container *ngFor="let match of group.value">
+          <app-match-card [match]="match"></app-match-card>
+        </ng-container>
       </div>
-      <ng-container *ngFor="let match of finishedMatches">
-        <app-match-card [match]="match"></app-match-card>
-      </ng-container>
-    </mat-tab>
-  </mat-tab-group>
-  
+    </div>
+  </mat-tab>
+</mat-tab-group>
