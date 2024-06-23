@@ -1,0 +1,43 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .content {
+    margin-left: 250px;  /* Adjust to match the sidenav width */
+    padding: 20px;
+  }
+  
+  .profile-button-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding-bottom: 20px; 
+  }
+  
+  .profile-button {
+    background: #173363;
+    border-radius: 50%;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    width: 48px; /* Adjust the size as needed */
+    height: 48px; /* Adjust the size as needed */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white; /* Ensure icon color contrasts with the background */
+  }
+  
+  .profile-button mat-icon {
+    font-size: 24px; /* Adjust icon size as needed */
+  }
+  
+  .content {
+    padding-top: 40px;
+  }
+
+  mat-tab-group {
+    margin-top: 60px; /* Adjust the value as needed */
+  }
+
+  
+  

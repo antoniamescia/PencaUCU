@@ -1,0 +1,9 @@
+<app-admin-sidenav></app-admin-sidenav>
+<div class="content">
+  <router-outlet></router-outlet>
+  <div class="profile-button-container">
+    <button mat-icon-button [routerLink]="['/perfil']" class="profile-button">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+  </div>
+</div>
