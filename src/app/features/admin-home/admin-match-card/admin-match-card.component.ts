@@ -6,6 +6,8 @@ import { Team } from "src/app/core/models/team";
 import { TeamsService } from "src/app/core/services/teams.service";
 import { DeleteMatchModalComponent } from "../delete-match-modal/delete-match-modal.component";
 import { MatDialog } from "@angular/material/dialog";
+import { EnterResultsModalComponent } from "../enter-results-modal/enter-results-modal.component";
+import { EditMatchModalComponent } from "../edit-match-modal/edit-match-modal.component";
 
 @Component({
   selector: "app-admin-match-card",
@@ -87,7 +89,18 @@ export class AdminMatchCardComponent {
     }
   }
 
-  editMatch() {}
+  editMatch() {
+    const dialogRef = this.dialog.open(EditMatchModalComponent, {
+      width: "800px",
+      height: "auto",
+      data: { 
+        match: this.match,
+        team1: this.team1,
+        team2: this.team2,
+        enter: true
+      },
+    });
+  }
 
   deleteMatch() {
     console.log("Delete match INFO", this.match);
@@ -99,6 +112,31 @@ export class AdminMatchCardComponent {
     });
   }
 
-  enterMatchResults() {}
+  enterMatchResults() {
+    const dialogRef = this.dialog.open(EnterResultsModalComponent, {
+      width: "400px",
+      height: "auto",
+      data: { 
+        match: this.match,
+        team1: this.team1,
+        team2: this.team2,
+        enter: true
+      },
+    });
+  }
+
+  editResults() {
+    const dialogRef = this.dialog.open(EnterResultsModalComponent, {
+      width: "400px",
+      height: "auto",
+      data: { 
+        match: this.match,
+        team1: this.team1,
+        team2: this.team2,
+        edit: true
+      },
+    });
+  }
+
 
 }

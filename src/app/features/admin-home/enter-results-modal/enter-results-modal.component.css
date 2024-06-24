@@ -48,7 +48,6 @@
   }
   
   .team-name {
-    font-weight: bold;
     font-size: 18px;
     white-space: nowrap; /* Prevents text from breaking line */
   }
@@ -73,5 +72,19 @@
   .prediction-container * {
     box-sizing: border-box; /* Ensures all elements consider padding and border in their width */
   }
+
+  .review-checkbox {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+  }
+
+  ::ng-deep .mat-checkbox-checked .mat-checkbox-background {
+    background-color: #173363 !important; /* Blue color; use your preferred shade of blue */
+  }
   
+  ::ng-deep .mat-checkbox-indeterminate .mat-checkbox-background,
+  ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+    background-color: #173363 !important;
+  }
   

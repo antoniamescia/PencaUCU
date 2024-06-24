@@ -10,7 +10,7 @@
     </div>
   
     <div class="match-status">
-      <div *ngIf="matchStatus === 'Próximo'" class="action-buttons">
+      <div *ngIf="matchStatus === 'Próximo' " class="action-buttons">
         <button mat-icon-button class="edit-button" (click)="editMatch()">
             <mat-icon>edit</mat-icon>
           </button>
@@ -23,7 +23,17 @@
         <span>Live</span>
       </div>
       <div *ngIf="matchStatus === 'Finalizado'">
-        <button class="action-button" (click)="enterMatchResults()">Ingresar Resultados</button>
+        <ng-container *ngIf="match?.goals_local !== null && match?.goals_visitor !== null; else noResults">
+          <div class="score">
+            {{ match?.goals_local }} - {{ match?.goals_visitor }}
+            <button mat-icon-button class="edit-button" (click)="editResults()">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </div>
+        </ng-container>
+        <ng-template #noResults>
+          <button class="action-button" (click)="enterMatchResults()">Ingresar Resultados</button>
+        </ng-template>
       </div>
     </div>
   

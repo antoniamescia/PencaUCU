@@ -123,7 +123,7 @@ export class AuthService {
 
   redirectUser() {
     if (this.isAdmin()) {
-      this.router.navigate(['/admin-home']);
+      this.router.navigate(['/dashboard']);
     } else {
       this.router.navigate(['/partidos']);  // Navigate to normal user home page
     }

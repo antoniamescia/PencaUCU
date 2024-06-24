@@ -142,3 +142,11 @@
   .edit-button:hover, .delete-button:hover {
     background-color: #f0f0f0; /* Light grey background on hover */
   }
+
+  .score {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }
+  

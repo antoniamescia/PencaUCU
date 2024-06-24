@@ -39,8 +39,24 @@ export class AdminService {
   }
 
   updateMatch(matchData: any): Observable<HttpResponse<any>> {
-    const url = `${this.url}/updateMatch`;
-    return this.http.put<any>(url, matchData, {
+    const url = `${this.url}/match/update`;
+    console.log("MATCH DATA", matchData);
+    
+    const match = {
+      team_local_id: matchData.match.team_local_id,
+      team_visitor_id: matchData.match.team_visitor_id,
+      match_date: matchData.match.match_date,
+      championship_id: 1,
+      stage_id: matchData.match.stage_id,
+      group_id: matchData.match.group_id,
+      goals_local: matchData.goals_local,
+      goals_visitor: matchData.goals_visitor,
+      match_id: matchData.match.match_id
+    }
+
+    console.log('Sending match data to backend:', match);
+    
+    return this.http.put<any>(url, match, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
       observe: 'response'
     });
@@ -57,7 +73,7 @@ export class AdminService {
   }
 
   insertMatchResult(resultData: any): Observable<HttpResponse<any>> {
-    const url = `${this.url}/insertMatchResult`;
+    const url = `${this.url}/match/result/insert`;
     return this.http.post<any>(url, resultData, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
       observe: 'response'

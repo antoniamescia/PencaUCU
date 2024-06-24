@@ -1,6 +1,6 @@
-<h2 mat-dialog-title>Cargar Partido</h2>
+<h2 mat-dialog-title>Editar Partido</h2>
 <div mat-dialog-content class="form-content">
-  <form [formGroup]="createMatchForm" class="create-match-form">
+  <form [formGroup]="editMatchForm" class="create-match-form">
     <div class="date-time-row">
       <mat-form-field class="form-field">
         <mat-label>Fecha</mat-label>
@@ -51,5 +51,5 @@
   </form>
 </div>
 <div mat-dialog-actions class="actions">
-  <button mat-button (click)="insertMatch()" [mat-dialog-close]="createMatchForm.value" cdkFocusInitial class="crear-button">Guardar</button>
+  <button mat-button (click)="editMatch()" [mat-dialog-close]="editMatchForm.value" cdkFocusInitial class="crear-button">Guardar</button>
 </div>

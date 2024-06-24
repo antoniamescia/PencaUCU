@@ -18,7 +18,7 @@
     <div *ngIf="!finishedMatches" class="no-matches-container">
       <span>No hay partidos finalizados</span>
     </div>
-    <div>
+    <div class="match-container">
       <div *ngFor="let group of groupedFinishedMatches | keyvalue">
         <div class="group-title">{{ group.key }}</div>
         <ng-container *ngFor="let match of group.value">

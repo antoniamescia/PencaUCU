@@ -13,6 +13,7 @@ export class MatchTabsComponent implements OnInit {
   matches: Match[] = [];
   upcomingMatches: Match[] = [];
   finishedMatches: Match[] = [];
+  inProgressMatches: Match[] = [];
   groupedUpcomingMatches: { [key: string]: any } = {};
   groupedFinishedMatches: { [key: string]: any } = {};
   matchCardKey = 0;
@@ -27,8 +28,7 @@ export class MatchTabsComponent implements OnInit {
   ngOnInit(): void {
     this.loadNotPlayedMatches();
     this.loadPlayedMatches();
-    console.log(" match tabs isAdmin", this.isAdmin);
-    
+    this.loadInProgressMatches();
   }
 
   updateMatchCards() {
@@ -53,7 +53,7 @@ export class MatchTabsComponent implements OnInit {
       next: (matches) => {
         console.log("Played matches:", matches);
         this.finishedMatches = matches; // Assign the matches to the component property
-        this.groupMatches(this.upcomingMatches, "finished");
+        this.groupMatches(this.finishedMatches, "finished");
       },
       error: (error) => {
         console.error("Error fetching played matches:", error);
@@ -61,10 +61,23 @@ export class MatchTabsComponent implements OnInit {
     });
   }
 
-  groupMatches(matches: Match[], type: "upcoming" | "finished") {
+  loadInProgressMatches() {
+    this.matchesService.getInProgressMatchesByChampionshipID().subscribe({
+      next: (matches) => {
+        console.log("In progress matches:", matches);
+        this.inProgressMatches = matches; // Assign the matches to the component property
+      },
+      error: (error) => {
+        console.error("Error fetching in progress matches:", error);
+      },
+    });
+  }
+
+  groupMatches(matches: Match[], type: "upcoming" | "finished" | "inProgress") {
     const grouped: { [key: string]: Match[] } = matches.reduce(
       (groups: { [key: string]: Match[] }, match) => {
-        const groupName = `${match.group_name} | ${match.stage_name}`;
+        // Ensure groupName is always a string even if properties are undefined
+        const groupName = match.group_name ? `${match.group_name} | ${match.stage_name || 'Unknown Stage'}` : match.stage_name || 'Unknown Stage';
         if (!groups[groupName]) {
           groups[groupName] = [];
         }
@@ -73,16 +86,16 @@ export class MatchTabsComponent implements OnInit {
       },
       {}
     );
-
+  
+    // Assign grouped matches to the appropriate property based on the type
     if (type === "upcoming") {
       this.groupedUpcomingMatches = grouped;
-    } else {
+    } else if (type === "finished") {
       this.groupedFinishedMatches = grouped;
-    }
-    console.log("Grouped matches:", grouped);
-    console.log("Grouped upcoming matches:", this.groupedUpcomingMatches);
-    console.log("Grouped finished matches:", this.groupedFinishedMatches);
+    // } else {
+    //   this.groupedInProgressMatches = grouped;  // Assuming there is a container for in-progress matches
+    // }
   }
-
-
+  
+} 
 }

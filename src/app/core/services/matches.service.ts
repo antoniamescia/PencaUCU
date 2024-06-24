@@ -28,6 +28,10 @@ export class MatchesService {
     return this.http.get(`${this.url}/match/played/1`, this.httpOptions);
   }
 
+  getInProgressMatchesByChampionshipID(): Observable<any> {
+    return this.http.get(`${this.url}/match/inprogress/1`, this.httpOptions);
+  }
+
   // Get the result of a specific match by its ID
   getMatchResultByID(matchId: number): Observable<any> {
     return this.http.get(`${this.url}/match/played/id/${matchId}`, this.httpOptions);

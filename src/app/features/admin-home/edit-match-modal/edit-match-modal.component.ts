@@ -1,23 +1,19 @@
-import { HttpClient } from "@angular/common/http";
-import { Component } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MatDialog } from "@angular/material/dialog";
-import { MatSnackBar } from "@angular/material/snack-bar";
-
-import { formatISO, setHours, setMinutes } from 'date-fns';
-import { toZonedTime } from 'date-fns-tz';
-
-import { Team } from "src/app/core/models/team";
-import { AdminService } from "src/app/core/services/admin.service";
-import { TeamsService } from "src/app/core/services/teams.service";
+import { HttpClient } from '@angular/common/http';
+import { Component, Inject } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Team } from 'src/app/core/models/team';
+import { AdminService } from 'src/app/core/services/admin.service';
+import { TeamsService } from 'src/app/core/services/teams.service';
 
 @Component({
-  selector: "app-create-match-modal",
-  templateUrl: "./create-match-modal.component.html",
-  styleUrls: ["./create-match-modal.component.css"],
+  selector: 'app-edit-match-modal',
+  templateUrl: './edit-match-modal.component.html',
+  styleUrls: ['./edit-match-modal.component.css']
 })
-export class CreateMatchModalComponent {
-  createMatchForm!: FormGroup;
+export class EditMatchModalComponent {
+  editMatchForm!: FormGroup;
   teams: Team[] = [];
   stages = [
     { id: 0, name: "Fase de Grupos" },
@@ -40,23 +36,55 @@ export class CreateMatchModalComponent {
     private adminService: AdminService,
     private teamsService: TeamsService,
     private fb: FormBuilder,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    public dialogRef: MatDialogRef<EditMatchModalComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
   ngOnInit(): void {
+    console.log('Data edit match:', this.data);
+    
     this.getTeams();
     this.generateTimeOptions();
-    this.createMatchForm = this.fb.group({
-      localTeam: [null, Validators.required],
-      visitorTeam: [null, Validators.required],
-      matchDate: [null, Validators.required],
-      matchTime: [null, Validators.required],
-      stage: [null, Validators.required],
-      group: [null],
-      goals_local: [null, Validators.required],
-      goals_visitor: [null, Validators.required],
+    this.editMatchForm = this.fb.group({
+      localTeam: [this.data.match.team_local_id || null, Validators.required],
+      visitorTeam: [this.data.match.team_visitor_id || null, Validators.required],
+      matchDate: [this.data.match.match_date || null, Validators.required],
+      matchTime: [this.data.matchTime || null, Validators.required],
+      stage: [this.data.match.stage_name || null, Validators.required],
+      group: [this.data.match.group_name || null],
     });
   }
+
+//   {
+//     "match": {
+//         "match_id": 9,
+//         "match_date": "2024-06-25T19:00:00Z",
+//         "team_local_id": 8,
+//         "team_visitor_id": 11,
+//         "goals_local": null,
+//         "goals_visitor": null,
+//         "championship_id": 1,
+//         "stage_id": 1,
+//         "group_s_id": 1,
+//         "group_name": "Grupo A",
+//         "stage_name": "Fase de Grupos"
+//     },
+//     "team1": {
+//         "team_id": 8,
+//         "name": "Peru",
+//         "url_logo": "http://nicolascartalla.duckdns.org:65190/bd2-back/media/teams/Peru.svg",
+//         "description": "Selección de Peru"
+//     },
+//     "team2": {
+//         "team_id": 11,
+//         "name": "Canada",
+//         "url_logo": "http://nicolascartalla.duckdns.org:65190/bd2-back/media/teams/Canada.svg",
+//         "description": "Selección de Canada"
+//     },
+//     "enter": true
+// }
+
 
   getTeams() {
     this.teamsService.getTeamsByChampionshipId().subscribe({
@@ -70,8 +98,8 @@ export class CreateMatchModalComponent {
     });
   }
 
-  insertMatch() {
-    const formData = this.createMatchForm?.value;
+  editMatch() {
+    const formData = this.editMatchForm?.value;
     console.log('Form Data:', formData);
     const formattedDateTime = this.formatDateTime(
       formData.matchDate,
@@ -99,7 +127,7 @@ export class CreateMatchModalComponent {
         console.error("Failed to insert match:", err);
         this.snackbar.open("Error al crear el partido", "Cerrar", {
           duration: 3000,
-          panelClass: ["snackbar-success"],
+          panelClass: ["snackbar-error"],
      });
       },
     });
@@ -132,6 +160,5 @@ export class CreateMatchModalComponent {
     // Concatena la fecha con la hora
     return `${formattedDate}T${formattedTime}:00.000Z`;  // Asegúrate de que la estructura final coincide con lo que el servidor espera
   }
-  
 
 }

@@ -48,25 +48,24 @@ export class PredictionComponent implements OnInit {
   savePrediction(): void {
     console.log("Saving prediction");
     console.log(this.team1Score, this.team2Score);
-    
+
     if (this.team1Score !== null && this.team2Score !== null) {
       const matchId = this.data.matchId;
       console.log("Match ID:", matchId);
-      
-  
+
       // Prepare the data object to send
       const predictionData = {
         match_id: matchId,
         goals_local: this.team1Score,
-        goals_visitor: this.team2Score
+        goals_visitor: this.team2Score,
       };
-  
+
       this.predictionService.insertPrediction(predictionData).subscribe({
         next: (response) => {
           this.dialogRef.close(true); // Close the dialog and indicate success
           this.snackbar.open("Predicción guardada correctamente", "Cerrar", {
-               duration: 3000,
-               panelClass: ["snackbar-success"],
+            duration: 3000,
+            panelClass: ["snackbar-success"],
           });
         },
         error: (error) => {
@@ -74,30 +73,15 @@ export class PredictionComponent implements OnInit {
           this.snackbar.open("Error al", "Cerrar", {
             duration: 3000,
             panelClass: ["snackbar-success"],
-       });
-        }
+          });
+        },
       });
     } else {
-      console.error('Both scores must be set to save the prediction.');
+      console.error("Both scores must be set to save the prediction.");
     }
-  }    
-  
+  }
 
   closeDialog(): void {
     this.dialogRef.close();
   }
 }
-
-// if (res.status === 200) {
-//   this.snackBar.open("Bienvenido!", "Cerrar", {
-//     duration: 3000,
-//     panelClass: ["snackbar-success"],
-//   });            
-//   this.router.navigate(["/partidos"]);
-// } else {
-//   this.snackBar.open("Error al iniciar sesión", "Cerrar", {
-//     duration: 3000,
-//     panelClass: ["snackbar-error"],
-//   });
-//   this.submitted = false;
-// }
