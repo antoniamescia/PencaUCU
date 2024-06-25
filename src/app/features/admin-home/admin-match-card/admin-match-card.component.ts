@@ -100,6 +100,11 @@ export class AdminMatchCardComponent {
         enter: true
       },
     });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log("The dialog was closed", result);
+      this.reloadComponent();
+    });
   }
 
   deleteMatch() {
@@ -109,6 +114,10 @@ export class AdminMatchCardComponent {
       width: "400px",
       height: "auto",
       data: { match: this.match },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      this.reloadComponent();
     });
   }
 
@@ -123,6 +132,10 @@ export class AdminMatchCardComponent {
         enter: true
       },
     });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      this.reloadComponent();
+    });
   }
 
   editResults() {
@@ -135,6 +148,17 @@ export class AdminMatchCardComponent {
         team2: this.team2,
         edit: true
       },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      this.reloadComponent();
+    });
+  }
+
+  reloadComponent() {
+    const currentUrl = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
     });
   }
 

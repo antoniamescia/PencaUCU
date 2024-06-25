@@ -141,6 +141,31 @@ export class MatchCardComponent implements OnInit {
     });
   }
 
+  calculatePoints(): number {
+    if (!this.match || !this.prediction) {
+      return 0;
+    }
+
+    // Exact result match
+    if (this.match.goals_local === this.prediction.goals_local &&
+        this.match.goals_visitor === this.prediction.goals_visitor) {
+      return 4;
+    }
+
+    // Correct winner or draw prediction
+    const matchDifference = this.match.goals_local - this.match.goals_visitor;
+    const predictionDifference = this.prediction.goals_local - this.prediction.goals_visitor;
+
+    if ((matchDifference > 0 && predictionDifference > 0) ||  // Both predict home win
+        (matchDifference < 0 && predictionDifference < 0) ||  // Both predict away win
+        (matchDifference === 0 && predictionDifference === 0)) {  // Both predict a draw
+      return 2;
+    }
+
+    return 0;  // Incorrect prediction
+  }
+
+
 
 
 }

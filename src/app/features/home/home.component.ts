@@ -78,7 +78,7 @@ export class HomeComponent implements OnInit {
 
   openPredictionModal() {
     this.dialog.open(PredictionModalComponent, {
-      width: '250px',
+      width: '400px',
       data: { name: 'yourData' } // Pass any required data
     });
   }

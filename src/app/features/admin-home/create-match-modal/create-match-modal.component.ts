@@ -20,8 +20,7 @@ export class CreateMatchModalComponent {
   createMatchForm!: FormGroup;
   teams: Team[] = [];
   stages = [
-    { id: 0, name: "Fase de Grupos" },
-    { id: 1, name: "Octavos de Final" },
+    { id: 1, name: "Fase de Grupos" },
     { id: 2, name: "Cuartos de Final" },
     { id: 3, name: "Semifinal" },
     { id: 4, name: "Final" },

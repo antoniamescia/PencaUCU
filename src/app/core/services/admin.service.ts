@@ -27,7 +27,7 @@ export class AdminService {
       match_date: matchData.matchDate,
       championship_id: 1,
       stage_id: matchData.stage,
-      group_id: matchData.group
+      group_s_id: matchData.group
     }
 
     console.log('Sending match data to backend:', match);
@@ -38,21 +38,21 @@ export class AdminService {
     });
   }
 
+
   updateMatch(matchData: any): Observable<HttpResponse<any>> {
     const url = `${this.url}/match/update`;
     console.log("MATCH DATA", matchData);
     
     const match = {
-      team_local_id: matchData.match.team_local_id,
-      team_visitor_id: matchData.match.team_visitor_id,
-      match_date: matchData.match.match_date,
+      team_local_id: matchData.localTeam,
+      team_visitor_id: matchData.visitorTeam,
+      match_date: matchData.matchDate,
       championship_id: 1,
-      stage_id: matchData.match.stage_id,
-      group_id: matchData.match.group_id,
-      goals_local: matchData.goals_local,
-      goals_visitor: matchData.goals_visitor,
-      match_id: matchData.match.match_id
+      stage_id: matchData.stage,
+      group_s_id: matchData.group,
+      match_id: matchData.matchId
     }
+    
 
     console.log('Sending match data to backend:', match);
     

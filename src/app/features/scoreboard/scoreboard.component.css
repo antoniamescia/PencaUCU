@@ -1,0 +1,62 @@
+/* App container to ensure the side navigation and scoreboard are in a row */
+.app-container {
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+  }
+  
+  /* Sidenav styling */
+  .sidenav {
+    width: 240px;
+    flex-shrink: 0;
+  }
+  
+  /* Scoreboard container styling */
+  .scoreboard-container {
+    flex-grow: 1;
+    overflow-x: auto;
+    padding: 20px;
+    background: #ffffff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Striped table styling, assuming use of MDC as previously discussed */
+  .striped-table {
+    width: 100%;
+    max-width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 30px;
+  }
+  
+  /* Table rows styling */
+  .mat-mdc-row:nth-child(odd) {
+    background-color: #f9f9f9; /* Lighter row for odd rows */
+  }
+  
+  .mat-mdc-row:nth-child(even) {
+    background-color: #ffffff; /* White row for even rows */
+  }
+  
+  /* Header row styling */
+  .mat-header-row {
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #f0f0f0;
+    color: #333;
+  }
+  
+  /* Cell styling */
+  .mat-cell,
+  .mat-header-cell {
+    padding: 8px 16px;
+    line-height: 24px;
+  }
+  
+  /* Medal icon styling */
+  .medal {
+    width: 24px;
+    height: auto;
+    margin-right: 8px;
+  }
+  

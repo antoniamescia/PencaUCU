@@ -29,6 +29,10 @@
       <div class="score">
         {{ match?.goals_local }} - {{ match?.goals_visitor }}
       </div>
+      <div *ngIf="predictionExists" class="prediction-details">
+        Tu predicción fue: {{ prediction?.goals_local }} - {{ prediction?.goals_visitor }}
+        <span>Ganaste {{ calculatePoints() }} puntos!</span>
+      </div>
     </div>
   </div>
 

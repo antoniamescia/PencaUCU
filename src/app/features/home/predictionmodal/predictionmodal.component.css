@@ -1,133 +1,87 @@
-.champion-prediction {
+.mat-dialog-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
-    padding: 20px;
+    align-items: center;
+    justify-content: center; /* This will center the modal content vertically */
+    padding: 24px;
+    box-sizing: border-box;
+    max-width: 600px;
+    width: auto; /* Adjust width to fit content */
+    margin: 0 auto; /* Centers the modal horizontally in the overlay */
+  }
+  
+  .champion-prediction {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%; /* Full width of its container */
     background-color: #f5f5f5;
     border-radius: 16px;
-    margin-bottom: 20px;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.05);
-}
-
-
-.mat-dialog-container {
-    min-width: 800px;  /* Set a minimum width */
-    max-width: 95vw;  /* Max width relative to the view width */
-    width: auto;  /* Allows the container to grow as needed */
-    height: auto;  /* Adjust height automatically */
-    border-radius: 10px;  /* Rounded corners for aesthetics */
-    overflow: hidden;  /* Ensures nothing spills outside the border */
-    width: 400px;
-}
-
-.mat-dialog-content {
-    width: 100%;  /* Ensures the content fills the container */
-    padding: 20px;  /* Adds padding inside the dialog for spacing */
-    width: 400px;
-}
-
-.mat-dialog-actions {
-    justify-content: center;  /* Centers the action buttons */
-    padding: 10px 20px;  /* Bottom padding increased */
-    margin-top: 20px;  /* Adds space above the action buttons */
-}
-
-.mat-form-field {
-    width: 100%;  /* Each form field takes full width */
-    margin-top: 20px;  /* Increased top margin for better spacing */
-}
-
-.mat-option-text {
+  }
+  
+  .form, .info {
+    width: 100%; /* Ensures these elements take full width of their parent */
     display: flex;
+    flex-direction: column;
     align-items: center;
-}
-
-.mat-option-text img {
-    width: 24px;
-    height: auto;
-    margin-right: 10px;
-}
-
-button[color="primary"] {
+  }
+  
+  .mat-form-field {
+    width: 100%; /* Each form field takes full width */
+    margin-top: 20px; /* Adds space between form fields */
+  }
+  
+  .mat-dialog-actions {
+    display: flex;
+    justify-content: space-around; /* This distributes buttons evenly */
+    width: 100%; /* Actions take full width */
+  }
+  
+  .close-button {
+    position: absolute;
+    right: 12px; /* Adjusts right spacing */
+    top: 12px; /* Adjusts top spacing */
+    color: gray;
+    z-index: 1000; /* Ensures the button is above all other elements */
+  }
+  
+  .subtitle {
+    text-align: center; /* Centers the subtitle */
+    margin-bottom: 10px; /* Space after the subtitle */
+    font-weight: 200;
+    font-size: 14px;
+  }
+  
+  .mat-option-text {
+    display: flex;
+    align-items: center; /* Aligns text and image vertically */
+  }
+  
+  .mat-option-text img {
+    margin-right: 10px; /* Space between image and text */
+  }
+  
+  button[color="primary"], button[color="basic"] {
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2); /* Subtle shadow */
+  }
+  
+  button[color="primary"] {
+    background-color: #173363; /* Theme primary color */
     color: white;
-    background-color: #173363;  /* Custom blue color */
-    border: none;  /* Removes any default border */
-}
-
-button[color="basic"] {
-    color: black;
+  }
+  
+  button[color="basic"] {
     background-color: lightgray;
-    border: none;  /* Removes any default border */
-}
+    color: black;
+  }
 
-.close-button {
-    position: absolute;
-    right: 12px;  /* Adjusts right spacing */
-    top: 12px;  /* Adjusts top spacing */
-    color: gray;
-    z-index: 1000;  /* Ensures the button is above all other elements */
-}
-
-.champion-prediction {
+  form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
-    background-color: #f5f5f5;
-    border-radius: 16px;
-    margin-bottom: 20px;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.05);
-}
-
-.subtitle {
-    font-size: 16px;  /* Ajusta el tamaño de la fuente según necesites */
-    font-weight: normal;
-    color: #666;
-    margin-bottom: 20px;  /* Espacio después del subtítulo */
-}
-
-.mat-dialog-container {
-    max-width: 600px;  /* Ajusta para hacer el modal más ancho */
-    width: auto;
-    padding: 24px;  /* Aumenta el padding para un diseño más espacioso */
-    box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
-}
-
-.mat-dialog-content {
-    width: 100%;
-    overflow: hidden; /* Asegura que nada se desborde del contenedor */
-}
-
-.mat-dialog-actions {
-    justify-content: space-between; /* Espacia los botones uniformemente */
-}
-
-.mat-form-field {
-    width: 100%;
-    margin-top: 20px;
-}
-
-.mat-option-text {
-    display: flex;
-    align-items: center;
-}
-
-.mat-option-text img {
-    width: 24px;
-    height: auto;
-    margin-right: 10px;
-}
-
-button[color="primary"], button[color="basic"] {
-    border: none; /* Limpia cualquier borde predeterminado */
-    padding: 10px 20px; /* Espaciado interno para hacer el botón más grande */
-}
-
-.close-button {
-    position: absolute;
-    right: 12px;
-    top: 12px;
-    color: gray;
-    z-index: 1000; /* Asegura que el botón esté sobre otros elementos */
-}
+  }
+  

@@ -3,6 +3,7 @@ import { Component } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { AuthService } from "src/app/core/services/auth.service";
 import { CreateMatchModalComponent } from "./create-match-modal/create-match-modal.component";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-admin-home",
@@ -15,7 +16,8 @@ export class AdminHomeComponent {
   constructor(
     private http: HttpClient,
     private authService: AuthService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -32,6 +34,13 @@ export class AdminHomeComponent {
     dialogRef.afterClosed().subscribe((result) => {
       console.log("The dialog was closed", result);
       // Call service to create match if result is not null
+    });
+  }
+
+  reloadComponent() {
+    const currentUrl = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
     });
   }
 }
