@@ -1,6 +1,7 @@
 import { HttpBackend, HttpClient } from '@angular/common/http';
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { AdminService } from 'src/app/core/services/admin.service';
 
 @Component({
@@ -14,7 +15,8 @@ export class DeleteMatchModalComponent {
     private http: HttpClient,
     private adminService: AdminService,
     public dialogRef: MatDialogRef<DeleteMatchModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any // Inject data passed to the dialog
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -28,6 +30,14 @@ export class DeleteMatchModalComponent {
       error: (err) => {
         this.dialogRef.close(null);
       }
+    });
+    this.reloadComponent();
+  }
+
+  reloadComponent() {
+    const currentUrl = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
     });
   }
 

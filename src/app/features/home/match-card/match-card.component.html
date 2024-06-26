@@ -1,4 +1,3 @@
-
 <div class="match-card">
   <div class="team-info">
     <img
@@ -11,27 +10,34 @@
 
   <div class="match-status">
     <div *ngIf="matchStatus === 'Próximo'">
-      <button class="action-button" *ngIf="!predictionExists" (click)="addPrediction()">
+      <button
+        class="action-button"
+        *ngIf="!predictionExists"
+        (click)="addPrediction()"
+      >
         Ingresar Predicción
       </button>
       <div *ngIf="predictionExists" class="prediction-details">
-        <span>Tu Predicción: {{ prediction?.goals_local }} - {{ prediction?.goals_visitor }}</span>
+        <span
+          > {{ prediction?.goals_local }} -
+          {{ prediction?.goals_visitor }}</span
+        >
         <button class="edit-button" (click)="addPrediction()">
           <mat-icon>edit</mat-icon>
         </button>
       </div>
     </div>
     <div *ngIf="matchStatus === 'En curso'" class="live-indicator">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Red_circle.gif" alt="Live" class="live-gif">
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/4/41/Red_circle.gif"
+        alt="Live"
+        class="live-gif"
+      />
       <span>Live</span>
     </div>
     <div *ngIf="matchStatus === 'Finalizado'">
       <div class="score">
         {{ match?.goals_local }} - {{ match?.goals_visitor }}
-      </div>
-      <div *ngIf="predictionExists" class="prediction-details">
-        Tu predicción fue: {{ prediction?.goals_local }} - {{ prediction?.goals_visitor }}
-        <span>Ganaste {{ calculatePoints() }} puntos!</span>
       </div>
     </div>
   </div>
@@ -45,7 +51,7 @@
     <div class="team-name">{{ team2?.name }}</div>
   </div>
 
-  <div class="match-details">
+  <div class="match-details" *ngIf="matchStatus !== 'Finalizado'">
     <div>
       {{
         match?.match_date
@@ -53,5 +59,16 @@
       }}
     </div>
     <div>{{ matchStatus }}</div>
+  </div>
+  <div class="match-details" *ngIf="matchStatus === 'Finalizado'">
+    <div *ngIf="!predictionIsNull" class="prediction-details">
+      Tu predicción fue: {{ prediction?.goals_local }} -
+      {{ prediction?.goals_visitor }}
+      <span>Ganaste {{ calculatePoints() }} puntos!</span>
+    </div>
+    <div *ngIf="predictionIsNull" class="prediction-details">
+      No ingresaste predicción.
+      <span>Ganaste {{ calculatePoints() }} puntos.</span>
+    </div>
   </div>
 </div>

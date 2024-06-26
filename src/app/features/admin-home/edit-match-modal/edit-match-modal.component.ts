@@ -21,10 +21,10 @@ export class EditMatchModalComponent {
   editMatchForm!: FormGroup;
   teams: Team[] = [];
   stages = [
-    { id: 0, name: "Fase de Grupos" },
-    { id: 1, name: "Cuartos de Final" },
-    { id: 2, name: "Semifinal" },
-    { id: 3, name: "Final" },
+    { id: 1, name: "Fase de Grupos" },
+    { id: 2, name: "Cuartos de Final" },
+    { id: 3, name: "Semifinal" },
+    { id: 4, name: "Final" },
   ];
   groups = [
     { id: 1, name: "Grupo A" },
@@ -111,6 +111,8 @@ export class EditMatchModalComponent {
         });
       },
     });
+    
+    this.reloadComponent();
   }
 
   generateTimeOptions() {
@@ -142,6 +144,13 @@ export class EditMatchModalComponent {
 
     // Concatena la fecha con la hora
     return `${formattedDate}T${formattedTime}:00.000Z`; // Asegúrate de que la estructura final coincide con lo que el servidor espera
+  }
+
+  reloadComponent() {
+    const currentUrl = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
+    });
   }
 
 }

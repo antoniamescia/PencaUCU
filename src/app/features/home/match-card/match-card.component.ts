@@ -22,10 +22,10 @@ export class MatchCardComponent implements OnInit {
   team1?: Team;
   team2?: Team;
   match_date = this.match?.match_date.toDateString();
-  predictionExists: boolean = false;  // Flag to check if prediction exists
+  predictionExists: boolean = false; // Flag to check if prediction exists
   prediction?: Prediction;
+  predictionIsNull: boolean = false;
   @Input() key: number = 0;
-
 
   constructor(
     private router: Router,
@@ -63,109 +63,117 @@ export class MatchCardComponent implements OnInit {
     });
   }
 
-
   getMatchStatusText(): string {
+    // Use the status if it's set directly (ideal if your backend or loading logic sets this)
+    if (this.match?.status) {
+      switch (this.match.status) {
+        case "inProgress":
+          return "En curso";
+        case "finished":
+          return "Finalizado";
+        case "upcoming":
+          return "Próximo";
+      }
+    }
+
+    // Fallback to calculating based on date if no status is set
     if (!this.match || !this.match.match_date) {
       return "";
     }
+
     const matchDate = new Date(this.match.match_date);
     const currentDate = new Date();
-  
-    const isSameDay = (date1: Date, date2: Date): boolean => {
-      return (
-        date1.getFullYear() === date2.getFullYear() &&
-        date1.getMonth() === date2.getMonth() &&
-        date1.getDate() === date2.getDate()
-      );
-    };
-  
-    const isTimeEqualOrLater = (date1: Date, date2: Date): boolean => {
-      return date1.getHours() > date2.getHours() ||
-             (date1.getHours() === date2.getHours() && date1.getMinutes() >= date2.getMinutes());
-    };
-  
-    if (isSameDay(matchDate, currentDate)) {
-      if (isTimeEqualOrLater(currentDate, matchDate)) {
-        return "En curso";
-      }
-      return "Próximo"; // Si es el mismo día pero la hora del partido aún no ha llegado.
-    } else if (matchDate.getTime() < currentDate.getTime()) {
-      return "Finalizado"; // El partido ya ocurrió en una fecha anterior.
-    } else {
-      return "Próximo"; // Fecha del partido aún no ha llegado.
-    }
-  }
-  
 
-  addPrediction(): void {    
+    if (matchDate > currentDate) {
+      return "Próximo";
+    } else if (matchDate < currentDate) {
+      return "Finalizado";
+    }
+
+    // Assume any match occurring today without explicit status is in progress
+    return "En curso";
+  }
+
+  addPrediction(): void {
     if (this.match && this.team1 && this.team2) {
       const dialogRef = this.dialog.open(PredictionComponent, {
-        width: '600px', // Set a specific width or use 'auto' if content varies significantly
-        maxWidth: '95vw', // Adjust if necessary to prevent overflow
-        maxHeight: '90vh', // Optional: limits the height of the dialog
+        width: "600px", // Set a specific width or use 'auto' if content varies significantly
+        maxWidth: "95vw", // Adjust if necessary to prevent overflow
+        maxHeight: "90vh", // Optional: limits the height of the dialog
         data: {
           team1: this.team1,
           team2: this.team2,
           matchDate: this.match?.match_date,
           matchId: this.match?.match_id,
-        }
-      });
-  
-      dialogRef.afterClosed().subscribe((result) => {
-        console.log("The dialog was closed", result);
+          prediction: this.prediction,
+        },
       });
     }
-    //refresh tab
-    
-  }
-
-  refreschMatchCard(): void {
-    this.key++;
   }
 
   getPrediction(): void {
-    this.predictionService.getPredictionByUserIdAndChampionshipId().subscribe((predictions: Prediction[]) => {
-      
-      this.predictionExists = predictions.some((pred: Prediction) => {
-        return pred.match_id === this.match?.match_id;
-      });
+    this.predictionService
+      .getPredictionByUserIdAndChampionshipId()
+      .subscribe((predictions: Prediction[]) => {
+        this.predictionExists = predictions.some((pred: Prediction) => {
+          return pred.match_id === this.match?.match_id;
+        });
 
-      this.prediction = predictions.find((pred: Prediction) => {
-        const matchFound = pred.match_id === this.match?.match_id;
-        if (matchFound) {
-          console.log("Match found for ID:", pred.match_id); // Log when a match is found
-        }
-        return matchFound;
-      });
+        this.prediction = predictions.find((pred: Prediction) => {
+          const matchFound = pred.match_id === this.match?.match_id;
+          return matchFound;
+        });
 
-    });
+        // Now set predictionIsNull here after prediction has potentially been set
+        this.predictionIsNull =
+          !this.prediction ||
+          this.prediction.goals_local === null ||
+          this.prediction.goals_visitor === null;
+      });
   }
 
   calculatePoints(): number {
-    if (!this.match || !this.prediction) {
+    // Check if necessary data is missing or incomplete
+    if (
+      !this.match ||
+      !this.prediction ||
+      this.prediction.goals_local === null ||
+      this.prediction.goals_visitor === null ||
+      this.match.goals_local === null ||
+      this.match.goals_visitor === null
+    ) {
       return 0;
     }
 
     // Exact result match
-    if (this.match.goals_local === this.prediction.goals_local &&
-        this.match.goals_visitor === this.prediction.goals_visitor) {
+    if (
+      this.match.goals_local === this.prediction.goals_local &&
+      this.match.goals_visitor === this.prediction.goals_visitor
+    ) {
       return 4;
     }
 
     // Correct winner or draw prediction
     const matchDifference = this.match.goals_local - this.match.goals_visitor;
-    const predictionDifference = this.prediction.goals_local - this.prediction.goals_visitor;
+    const predictionDifference =
+      this.prediction.goals_local - this.prediction.goals_visitor;
 
-    if ((matchDifference > 0 && predictionDifference > 0) ||  // Both predict home win
-        (matchDifference < 0 && predictionDifference < 0) ||  // Both predict away win
-        (matchDifference === 0 && predictionDifference === 0)) {  // Both predict a draw
+    if (
+      (matchDifference > 0 && predictionDifference > 0) || // Both predict home win
+      (matchDifference < 0 && predictionDifference < 0) || // Both predict away win
+      (matchDifference === 0 && predictionDifference === 0)
+    ) {
+      // Both predict a draw
       return 2;
     }
 
-    return 0;  // Incorrect prediction
+    return 0; // Incorrect prediction
   }
 
-
-
-
+  reloadComponent() {
+    const currentUrl = this.router.url;
+    this.router.navigateByUrl("/", { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
+    });
+  }
 }

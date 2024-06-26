@@ -11,14 +11,15 @@ import { PredictionService } from "src/app/core/services/prediction.service";
   styleUrls: ["./prediction.component.css"],
 })
 export class PredictionComponent implements OnInit {
-  team1Score: number | null = null;
-  team2Score: number | null = null;
+  team1Score: number = this.data.prediction?.goals_local || 0;
+  team2Score: number = this.data.prediction?.goals_visitor || 0;
 
   constructor(
     public dialogRef: MatDialogRef<PredictionComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private predictionService: PredictionService,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private router:  Router
   ) {}
 
   ngOnInit(): void {
@@ -70,7 +71,7 @@ export class PredictionComponent implements OnInit {
         },
         error: (error) => {
           this.dialogRef.close(false); // Close the dialog and indicate failure
-          this.snackbar.open("Error al", "Cerrar", {
+          this.snackbar.open("Error al guardar predicción", "Cerrar", {
             duration: 3000,
             panelClass: ["snackbar-success"],
           });
@@ -79,9 +80,17 @@ export class PredictionComponent implements OnInit {
     } else {
       console.error("Both scores must be set to save the prediction.");
     }
+    this.reloadComponent()
   }
 
   closeDialog(): void {
     this.dialogRef.close();
+  }
+
+  reloadComponent() {
+    const currentUrl = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
+    });
   }
 }

@@ -6,6 +6,7 @@ import { documentFormatValidator } from "src/app/validators/document.validator";
 import { Observable } from "rxjs";
 import { startWith, map } from "rxjs/operators";
 import { Router } from "@angular/router";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-signup",
@@ -66,7 +67,8 @@ export class SignupComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private snackbar: MatSnackBar
   ) {
     this.signupForm = this.fb.group(
       {
@@ -147,15 +149,19 @@ export class SignupComponent {
         })
         .subscribe(
           (response) => {
-            console.log("Signup successful", response);
+            this.snackbar.open("Registro de usuario éxitoso", "Cerrar", {
+              duration: 3000,
+              panelClass: ["snackbar-success"],
+            });
             this.router.navigate(["/"]);
             this.submitted = false;
           },
           (error) => {
             console.error("Signup failed", error);
-            // Handle signup error, e.g., display error message to the user
-            alert("Signup failed. Please try again."); // Example alert
-            // this.errorService.display(error.message); // Assuming you have an error handling service
+            this.snackbar.open("Error al registrar usuario", "Cerrar", {
+              duration: 3000,
+              panelClass: ["snackbar-error"],
+            });
             this.submitted = false;
           }
         );
@@ -167,3 +173,8 @@ export class SignupComponent {
     }
   }
 }
+
+// this.snackbar.open("Error al editar el partido", "Cerrar", {
+//   duration: 3000,
+//   panelClass: ["snackbar-error"],
+// });

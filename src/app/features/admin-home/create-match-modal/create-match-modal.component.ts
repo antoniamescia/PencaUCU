@@ -3,9 +3,10 @@ import { Component } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { Router } from "@angular/router";
 
-import { formatISO, setHours, setMinutes } from 'date-fns';
-import { toZonedTime } from 'date-fns-tz';
+import { formatISO, setHours, setMinutes } from "date-fns";
+import { toZonedTime } from "date-fns-tz";
 
 import { Team } from "src/app/core/models/team";
 import { AdminService } from "src/app/core/services/admin.service";
@@ -39,7 +40,8 @@ export class CreateMatchModalComponent {
     private adminService: AdminService,
     private teamsService: TeamsService,
     private fb: FormBuilder,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -71,7 +73,7 @@ export class CreateMatchModalComponent {
 
   insertMatch() {
     const formData = this.createMatchForm?.value;
-    console.log('Form Data:', formData);
+    console.log("Form Data:", formData);
     const formattedDateTime = this.formatDateTime(
       formData.matchDate,
       formData.matchTime
@@ -92,16 +94,18 @@ export class CreateMatchModalComponent {
         this.snackbar.open("Partido creado correctamente!", "Cerrar", {
           duration: 3000,
           panelClass: ["snackbar-success"],
-     });
+        });
       },
       error: (err) => {
         console.error("Failed to insert match:", err);
         this.snackbar.open("Error al crear el partido", "Cerrar", {
           duration: 3000,
           panelClass: ["snackbar-success"],
-     });
+        });
       },
     });
+
+    this.reloadComponent();
   }
 
   generateTimeOptions() {
@@ -115,22 +119,30 @@ export class CreateMatchModalComponent {
     }
   }
 
-  
   formatDateTime(date: Date, time: string): string {
     const dateObj = new Date(date);
     const [hours, minutes] = time.split(":").map(Number);
     dateObj.setHours(hours, minutes, 0, 0); // También se puede poner los milisegundos a 0 si es necesario
-  
+
     // Formateo manual para mantener la zona horaria local
     const year = dateObj.getFullYear();
-    const month = dateObj.getMonth() + 1;  // Meses en JavaScript son 0-indexados
+    const month = dateObj.getMonth() + 1; // Meses en JavaScript son 0-indexados
     const day = dateObj.getDate();
-    const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-    const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
-  
-    // Concatena la fecha con la hora
-    return `${formattedDate}T${formattedTime}:00.000Z`;  // Asegúrate de que la estructura final coincide con lo que el servidor espera
-  }
-  
+    const formattedDate = `${year}-${month.toString().padStart(2, "0")}-${day
+      .toString()
+      .padStart(2, "0")}`;
+    const formattedTime = `${hours.toString().padStart(2, "0")}:${minutes
+      .toString()
+      .padStart(2, "0")}`;
 
+    // Concatena la fecha con la hora
+    return `${formattedDate}T${formattedTime}:00.000Z`; // Asegúrate de que la estructura final coincide con lo que el servidor espera
+  }
+
+  reloadComponent() {
+    const currentUrl = this.router.url;
+    this.router.navigateByUrl("/", { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
+    });
+  }
 }

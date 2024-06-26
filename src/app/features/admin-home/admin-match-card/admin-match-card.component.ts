@@ -101,10 +101,7 @@ export class AdminMatchCardComponent {
       },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log("The dialog was closed", result);
-      this.reloadComponent();
-    });
+
   }
 
   deleteMatch() {
@@ -116,9 +113,6 @@ export class AdminMatchCardComponent {
       data: { match: this.match },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      this.reloadComponent();
-    });
   }
 
   enterMatchResults() {
@@ -133,9 +127,6 @@ export class AdminMatchCardComponent {
       },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      this.reloadComponent();
-    });
   }
 
   editResults() {
@@ -150,9 +141,6 @@ export class AdminMatchCardComponent {
       },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      this.reloadComponent();
-    });
   }
 
   reloadComponent() {

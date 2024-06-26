@@ -1,6 +1,7 @@
 import { Component, Inject } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { Router } from "@angular/router";
 import { AdminService } from "src/app/core/services/admin.service";
 
 @Component({
@@ -16,7 +17,8 @@ export class EnterResultsModalComponent {
     public dialogRef: MatDialogRef<EnterResultsModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private adminService: AdminService,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -75,5 +77,13 @@ export class EnterResultsModalComponent {
         },
       });
     }
+    this.reloadComponent()
+  }
+
+  reloadComponent() {
+    const currentUrl = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
+    });
   }
 }
