@@ -1,27 +1,31 @@
-# PencaUCU
+# Frontend Angular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.4.
+## Opción 1 - Levantar frontend con Docker Compose
 
-## Development server
+### 1.a - Requisitos
+Asegúrate de que el archivo `Dockerfile` y `docker-compose.yml` están configurados en el directorio del frontend.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+### 1.b - Levantar ambiente
+Parados en la raíz del proyecto frontend, ejecutar:
 
-## Code scaffolding
+```bash
+docker-compose up 
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Opción 2 - Levantar frontend localmente con ng serve
+### 2.a - Requisitos
+Asegúrate de tener Node.js y Angular CLI instalados en tu máquina.
 
-## Build
+### 2.b - Instalar dependencias
+Parados en la raíz del proyecto frontend, ejecutar:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```bash
+npm install
+```
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### 2.c - Levantar ambiente
+Ejecutar el siguiente comando para servir la aplicación:
+```bash
+ng serve -o 
+```
+Accede a la aplicación Angular en http://localhost:4200.
