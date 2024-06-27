@@ -43,7 +43,6 @@ export class PredictionModalComponent implements OnInit {
     this.teamsService.getTeamsByChampionshipId().subscribe({
       next: (response) => {
         this.teams = response; // Assuming the response is an array of teams
-        console.log("Teams loaded:", this.teams);
       },
       error: (err) => {
         console.error("Failed to load teams:", err);
@@ -83,9 +82,6 @@ export class PredictionModalComponent implements OnInit {
       const championId = this.predictionForm.get("champion")?.value;
       const subChampionId = this.predictionForm.get("subChampion")?.value;
 
-      console.log("Champion ID:", championId);
-      console.log("Sub-champion ID:", subChampionId);
-
       const predictionData = {
         champion: championId,
         subChampion: subChampionId,
@@ -95,9 +91,7 @@ export class PredictionModalComponent implements OnInit {
         .insertOrUpdatePredictionChampions(predictionData)
         .subscribe({
           next: (response) => {
-            console.log("Prediction saved successfully", response);
-            // Reload window
-            window.location.reload();
+
           },
           error: (error) => {
             console.error("Failed to save prediction", error);

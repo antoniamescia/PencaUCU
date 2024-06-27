@@ -22,7 +22,6 @@ export class EnterResultsModalComponent {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.data);
   }
 
   incrementScore(team: "team1" | "team2"): void {
@@ -46,12 +45,9 @@ export class EnterResultsModalComponent {
   }
 
   enterMatchResults() {
-    console.log("Saving results");
-    console.log(this.team1Score, this.team2Score);
 
     if (this.team1Score !== null && this.team2Score !== null) {
       const matchId = this.data.match.match_id;
-      console.log("Match ID:", matchId);
 
       // Prepare the data object to send
       const resultsData = {
@@ -63,7 +59,6 @@ export class EnterResultsModalComponent {
       // Call the service to save the results
       this.adminService.insertMatchResult(resultsData).subscribe({
         next: (response) => {
-          console.log("Match updated:", response);
           this.snackbar.open("Resultado actualizado exitosamente!", "Cerrar", {
             duration: 2000,
           });

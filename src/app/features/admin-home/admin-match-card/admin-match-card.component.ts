@@ -54,39 +54,36 @@ export class AdminMatchCardComponent {
       },
     });
   }
+  
   getMatchStatusText(): string {
+    // Use the status if it's set directly (ideal if your backend or loading logic sets this)
+    if (this.match?.status) {
+      switch (this.match.status) {
+        case "inProgress":
+          return "En curso";
+        case "finished":
+          return "Finalizado";
+        case "upcoming":
+          return "Próximo";
+      }
+    }
+
+    // Fallback to calculating based on date if no status is set
     if (!this.match || !this.match.match_date) {
       return "";
     }
+
     const matchDate = new Date(this.match.match_date);
     const currentDate = new Date();
 
-    const isSameDay = (date1: Date, date2: Date): boolean => {
-      return (
-        date1.getFullYear() === date2.getFullYear() &&
-        date1.getMonth() === date2.getMonth() &&
-        date1.getDate() === date2.getDate()
-      );
-    };
-
-    const isTimeEqualOrLater = (date1: Date, date2: Date): boolean => {
-      return (
-        date1.getHours() > date2.getHours() ||
-        (date1.getHours() === date2.getHours() &&
-          date1.getMinutes() >= date2.getMinutes())
-      );
-    };
-
-    if (isSameDay(matchDate, currentDate)) {
-      if (isTimeEqualOrLater(currentDate, matchDate)) {
-        return "En curso";
-      }
-      return "Próximo"; // Si es el mismo día pero la hora del partido aún no ha llegado.
-    } else if (matchDate.getTime() < currentDate.getTime()) {
-      return "Finalizado"; // El partido ya ocurrió en una fecha anterior.
-    } else {
-      return "Próximo"; // Fecha del partido aún no ha llegado.
+    if (matchDate > currentDate) {
+      return "Próximo";
+    } else if (matchDate < currentDate) {
+      return "Finalizado";
     }
+
+    // Assume any match occurring today without explicit status is in progress
+    return "En curso";
   }
 
   editMatch() {
@@ -105,7 +102,6 @@ export class AdminMatchCardComponent {
   }
 
   deleteMatch() {
-    console.log("Delete match INFO", this.match);
     
     const dialogRef = this.dialog.open(DeleteMatchModalComponent, {
       width: "400px",

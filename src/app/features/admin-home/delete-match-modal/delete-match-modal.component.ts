@@ -19,8 +19,7 @@ export class DeleteMatchModalComponent {
     private router: Router
   ) {}
 
-  ngOnInit(): void {
-    console.log("DATA REACHING THE MODAL",this.data);}
+  ngOnInit(): void {}
 
   deleteMatch(): void {    
     this.adminService.deleteMatch(this.data.match.match_id).subscribe({

@@ -47,8 +47,6 @@ export class EditMatchModalComponent {
   ) {}
 
   ngOnInit(): void {
-    console.log("Data edit match:", this.data);
-
     this.getTeams();
     this.generateTimeOptions();
     this.editMatchForm = this.fb.group({
@@ -60,7 +58,7 @@ export class EditMatchModalComponent {
       matchDate: [this.data.match.match_date || null, Validators.required],
       matchTime: [this.data.matchTime || null, Validators.required],
       stage: [this.data.match.stage_name || null, Validators.required],
-      group: [this.data.match.group_id|| null],
+      group: [this.data.match.group_name|| null],
     });
   }
 
@@ -68,7 +66,6 @@ export class EditMatchModalComponent {
     this.teamsService.getTeamsByChampionshipId().subscribe({
       next: (response) => {
         this.teams = response;
-        console.log("Teams loaded:", response);
       },
       error: (err) => {
         console.error("Failed to load teams:", err);
@@ -78,7 +75,6 @@ export class EditMatchModalComponent {
 
   editMatch() {
     const formData = this.editMatchForm?.value;
-    console.log("Form Data:", formData);
     
     const formattedDateTime = this.formatDateTime(
       formData.matchDate,
@@ -96,7 +92,6 @@ export class EditMatchModalComponent {
 
     this.adminService.updateMatch(match).subscribe({
       next: (response) => {
-        console.log("Match inserted:", response);
         this.dialog.closeAll();
         this.snackbar.open("Partido editado correctamente!", "Cerrar", {
           duration: 3000,

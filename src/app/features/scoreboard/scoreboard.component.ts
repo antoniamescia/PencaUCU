@@ -39,7 +39,6 @@ export class ScoreboardComponent {
         });
         this.dataSource = new MatTableDataSource(players);
         this.dataSource.sort = this.sort;
-        console.log("Scoreboard:", players);
       },
       error: (error: any) => {
         console.error("Error fetching scoreboard:", error);

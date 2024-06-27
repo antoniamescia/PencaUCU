@@ -10,6 +10,10 @@ import { TeamsService } from "src/app/core/services/teams.service";
 import { HttpClient } from "@angular/common/http";
 import { PredictionService } from "src/app/core/services/prediction.service";
 import { Prediction } from "src/app/core/models/prediction";
+import { TooltipPosition } from "@angular/material/tooltip";
+import { FormControl } from "@angular/forms";
+
+import * as moment from 'moment-timezone';
 
 @Component({
   selector: "app-match-card",
@@ -26,6 +30,15 @@ export class MatchCardComponent implements OnInit {
   prediction?: Prediction;
   predictionIsNull: boolean = false;
   @Input() key: number = 0;
+  positionOptions: TooltipPosition[] = [
+    "after",
+    "before",
+    "above",
+    "below",
+    "left",
+    "right",
+  ];
+  position = new FormControl(this.positionOptions[0]);
 
   constructor(
     private router: Router,
@@ -64,6 +77,28 @@ export class MatchCardComponent implements OnInit {
   }
 
   getMatchStatusText(): string {
+    
+    if (this.match && this.match.match_date) {
+      console.log('Match Date before formatting:', this.match.match_date);
+      
+      const matchDate = moment.tz(this.match.match_date, "UTC");
+    // Retrieve current date in Montevideo and convert to UTC for display
+    const currentDate = moment().tz("America/Montevideo").utc();
+
+    console.log('Match Date in UTC:', matchDate.format("YYYY-MM-DDTHH:mm:ss[Z]")); // Formats to ISO with 'Z'
+    console.log('Current Date in UTC:', currentDate.format("YYYY-MM-DDTHH:mm:ss[Z]")); // Formats to ISO with 'Z'
+
+    const oneHourBefore = matchDate.clone().subtract(1, 'hour').format("YYYY-MM-DDTHH:mm:ss[Z]");
+    const oneMinuteBefore = matchDate.clone().subtract(1, 'minute').format("YYYY-MM-DDTHH:mm:ss[Z]");
+
+    console.log('One Hour Before:', oneHourBefore);
+    console.log('One Minute Before:', oneMinuteBefore);
+
+    if (currentDate.isBetween(moment(oneHourBefore, "YYYY-MM-DDTHH:mm:ss[Z]"), moment(oneMinuteBefore, "YYYY-MM-DDTHH:mm:ss[Z]"), null, '[]')) {
+      console.log("Match is about to start");
+      return "Por comenzar";
+    }
+    }
     // Use the status if it's set directly (ideal if your backend or loading logic sets this)
     if (this.match?.status) {
       switch (this.match.status) {

@@ -53,8 +53,6 @@ export class AuthService {
         localStorage.setItem('user_major', authResult.body.user_profile.major);
         localStorage.setItem('role_id', authResult.body.user_profile.role_id);
         localStorage.setItem('document_id', authResult.body.user_profile.document_id);
-
-        console.log('User profile:', authResult.body.user_profile);
         
     } else {
         console.error('Invalid authentication result:', authResult);
@@ -80,7 +78,7 @@ export class AuthService {
     return this.http.post<any>(signupUrl, formattedUser, { ...this.httpOptions, observe: 'response' })
       .pipe(
         tap(response => {
-          console.log('Response:', response);
+         
         }),
         catchError(this.handleError<any>('signUp'))
       );

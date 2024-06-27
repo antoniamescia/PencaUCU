@@ -63,17 +63,14 @@ export class CreateMatchModalComponent {
     this.teamsService.getTeamsByChampionshipId().subscribe({
       next: (response) => {
         this.teams = response;
-        console.log("Teams loaded:", response);
       },
       error: (err) => {
-        console.error("Failed to load teams:", err);
-      },
+        console.error("Failed to load teams:", err);},
     });
   }
 
   insertMatch() {
     const formData = this.createMatchForm?.value;
-    console.log("Form Data:", formData);
     const formattedDateTime = this.formatDateTime(
       formData.matchDate,
       formData.matchTime
@@ -89,7 +86,6 @@ export class CreateMatchModalComponent {
 
     this.adminService.insertMatch(match).subscribe({
       next: (response) => {
-        console.log("Match inserted:", response);
         this.dialog.closeAll();
         this.snackbar.open("Partido creado correctamente!", "Cerrar", {
           duration: 3000,
@@ -97,7 +93,6 @@ export class CreateMatchModalComponent {
         });
       },
       error: (err) => {
-        console.error("Failed to insert match:", err);
         this.snackbar.open("Error al crear el partido", "Cerrar", {
           duration: 3000,
           panelClass: ["snackbar-success"],

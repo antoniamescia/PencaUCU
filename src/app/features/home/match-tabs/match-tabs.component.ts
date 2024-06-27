@@ -41,9 +41,8 @@ export class MatchTabsComponent implements OnInit {
       next: (matches) => {
         matches.forEach(
           (match: { status: string }) => (match.status = "finished")
-        ); // Set status for finished matches
-        console.log("Played matches:", matches);
-        this.finishedMatches = matches; // Assign the matches to the component property
+        ); 
+        this.finishedMatches = matches; 
         this.groupMatches(this.finishedMatches, "finished");
       },
       error: (error) => {
@@ -55,22 +54,30 @@ export class MatchTabsComponent implements OnInit {
   loadNotPlayedMatches() {
     this.matchesService.getNotPlayedMatchesByChampionshipID().subscribe({
       next: (upcomingMatches) => {
-        upcomingMatches.forEach(
-          (match: { status: string }) => (match.status = "upcoming")
-        ); // Set status for upcoming matches
-        console.log("Not played matches:", upcomingMatches);
+        if (Array.isArray(upcomingMatches)) {
+          upcomingMatches.forEach(
+            (match: { status: string }) => (match.status = "upcoming")
+          );
+        } 
         this.matchesService.getInProgressMatchesByChampionshipID().subscribe({
           next: (inProgressMatches) => {
-            inProgressMatches.forEach(
-              (match: { status: string }) => (match.status = "inProgress")
-            ); // Set status for in-progress matches
-            console.log("In progress matches:", inProgressMatches);
-            const combinedMatches = [...upcomingMatches, ...inProgressMatches];
+            if (
+              Array.isArray(inProgressMatches) &&
+              inProgressMatches !== null
+            ) {
+              inProgressMatches.forEach(
+                (match: { status: string }) => (match.status = "inProgress")
+              );
+            } 
+            const combinedMatches = [
+              ...(upcomingMatches || []), // Fallback to empty array if not an array
+              ...(inProgressMatches || []), // Fallback to empty array if not an array
+            ];
             this.upcomingMatches = combinedMatches; // Assign the combined matches to the component property
             this.groupMatches(combinedMatches, "upcoming");
           },
           error: (error) => {
-            console.error("Error fetching in progress matches:", error);
+            console.error("Error fetching in-progress matches:", error);
           },
         });
       },
@@ -96,14 +103,10 @@ export class MatchTabsComponent implements OnInit {
       {}
     );
 
-    // Assign grouped matches to the appropriate property based on the type
     if (type === "upcoming") {
       this.groupedUpcomingMatches = grouped;
     } else if (type === "finished") {
       this.groupedFinishedMatches = grouped;
-      // } else {
-      //   this.groupedInProgressMatches = grouped;  // Assuming there is a container for in-progress matches
-      // }
     }
   }
 }

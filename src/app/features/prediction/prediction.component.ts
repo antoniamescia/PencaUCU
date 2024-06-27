@@ -47,12 +47,11 @@ export class PredictionComponent implements OnInit {
   }
 
   savePrediction(): void {
-    console.log("Saving prediction");
-    console.log(this.team1Score, this.team2Score);
+   
 
     if (this.team1Score !== null && this.team2Score !== null) {
       const matchId = this.data.matchId;
-      console.log("Match ID:", matchId);
+     
 
       // Prepare the data object to send
       const predictionData = {

@@ -18,7 +18,6 @@ export class TeamsService {
   constructor(private http: HttpClient) { }
 
   getTeamsByChampionshipId(championshipId: number = 1): Observable<any> {
-    console.log('Getting teams by championship ID:', championshipId);
     
     return this.http.get<any>(`${this.url}/team/championship/${championshipId}`);
   }

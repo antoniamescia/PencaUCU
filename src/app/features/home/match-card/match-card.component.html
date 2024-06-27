@@ -9,18 +9,23 @@
   </div>
 
   <div class="match-status">
+    <div *ngIf="matchStatus === 'Por comenzar'">
+      <mat-icon class="info" matTooltip="Partido por comenzar. Ya no puedes ingresar predicciones!"
+      [matTooltipPosition]="position.value!">info</mat-icon>
+    </div>
     <div *ngIf="matchStatus === 'Próximo'">
       <button
         class="action-button"
         *ngIf="!predictionExists"
         (click)="addPrediction()"
+        matTooltip="Podrás ingresar tu predicción hasta 1 hora antes del partido."
+        [matTooltipPosition]="position.value!"
       >
         Ingresar Predicción
       </button>
       <div *ngIf="predictionExists" class="prediction-details">
-        <span
-          > {{ prediction?.goals_local }} -
-          {{ prediction?.goals_visitor }}</span
+        <span>
+          {{ prediction?.goals_local }} - {{ prediction?.goals_visitor }}</span
         >
         <button class="edit-button" (click)="addPrediction()">
           <mat-icon>edit</mat-icon>

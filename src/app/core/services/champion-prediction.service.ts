@@ -43,8 +43,6 @@ export class ChampionPredictionService {
       subchampion: predictionData.subChampion.team_id,
       championship_id: 1  
     };
-
-    console.log('Sending prediction data to backend:', requestBody);
     
 
     return this.http.post<HttpResponse<any>>(`${this.url}/prediction/championship/insert`, requestBody, { observe: 'response' });

@@ -22,7 +22,6 @@ export class AdminHomeComponent {
 
   ngOnInit(): void {
     this.isAdmin = this.authService.isAdmin();
-    console.log("isAdmin", this.isAdmin);
   }
 
   openCreateMatchModal() {
@@ -31,10 +30,6 @@ export class AdminHomeComponent {
       height: "auto", // Adjust height as needed
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log("The dialog was closed", result);
-      // Call service to create match if result is not null
-    });
   }
 
   reloadComponent() {

@@ -30,7 +30,6 @@ export class AdminService {
       group_s_id: matchData.group
     }
 
-    console.log('Sending match data to backend:', match);
     
     return this.http.post<any>(url, match, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -40,9 +39,7 @@ export class AdminService {
 
 
   updateMatch(matchData: any): Observable<HttpResponse<any>> {
-    const url = `${this.url}/match/update`;
-    console.log("MATCH DATA", matchData);
-    
+    const url = `${this.url}/match/update`;    
     const match = {
       team_local_id: matchData.localTeam,
       team_visitor_id: matchData.visitorTeam,
@@ -52,19 +49,14 @@ export class AdminService {
       group_s_id: matchData.group,
       match_id: matchData.matchId
     }
-    
-
-    console.log('Sending match data to backend:', match);
-    
+        
     return this.http.put<any>(url, match, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
       observe: 'response'
     });
   }
 
-  deleteMatch(matchId: number): Observable<HttpResponse<any>> {
-    console.log('Deleting match with ID:', matchId);
-    
+  deleteMatch(matchId: number): Observable<HttpResponse<any>> {    
     const url = `${this.url}/match/delete`;
     return this.http.post<any>(url, { match_id: matchId }, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
