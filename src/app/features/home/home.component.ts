@@ -50,7 +50,6 @@ export class HomeComponent implements OnInit {
 
   logout() {
     // Implement logout logic here
-    console.log("Logout clicked");
   }
 
   onOutletLoaded(event: any) {
@@ -63,11 +62,8 @@ export class HomeComponent implements OnInit {
       .subscribe({
         next: (response) => {
           if (!response) {
-            console.log("No predictions found");
             this.openPredictionModal();
-          } else {
-            console.log("Predictions:", response);
-          }
+          } 
         },
         error: (err) => {
           console.error("Error fetching predictions:", err);
@@ -78,7 +74,7 @@ export class HomeComponent implements OnInit {
 
   openPredictionModal() {
     this.dialog.open(PredictionModalComponent, {
-      width: '250px',
+      width: '400px',
       data: { name: 'yourData' } // Pass any required data
     });
   }

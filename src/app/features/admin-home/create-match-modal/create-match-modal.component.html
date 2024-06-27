@@ -1,0 +1,55 @@
+<h2 mat-dialog-title>Cargar Partido</h2>
+<div mat-dialog-content class="form-content">
+  <form [formGroup]="createMatchForm" class="create-match-form">
+    <div class="date-time-row">
+      <mat-form-field class="form-field">
+        <mat-label>Fecha</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="matchDate">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field class="form-field">
+          <mat-label>Hora</mat-label>
+          <mat-select formControlName="matchTime">
+              <mat-option *ngFor="let time of times" [value]="time">{{time}}</mat-option>
+          </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="teams-row">
+      <mat-form-field class="form-field">
+        <mat-label>Equipo Local</mat-label>
+        <mat-select formControlName="localTeam">
+          <mat-option *ngFor="let team of teams" [value]="team.team_id">{{team.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="form-field">
+        <mat-label>Equipo Visitante</mat-label>
+        <mat-select formControlName="visitorTeam">
+          <mat-option *ngFor="let team of teams" [value]="team.team_id">{{team.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="stage-group-row">
+      <mat-form-field class="form-field">
+        <mat-label>Etapa</mat-label>
+        <mat-select formControlName="stage">
+          <mat-option *ngFor="let stage of stages" [value]="stage.id">{{stage.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="form-field">
+        <mat-label>Grupo (Opcional)</mat-label>
+        <mat-select formControlName="group">
+          <mat-option *ngFor="let group of groups" [value]="group.id">{{group.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions class="actions">
+  <button mat-button (click)="insertMatch()" [mat-dialog-close]="createMatchForm.value" cdkFocusInitial class="crear-button">Guardar</button>
+</div>

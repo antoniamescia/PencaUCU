@@ -99,3 +99,67 @@
 .edit-button i {
   margin-right: 5px;
 }
+
+.prediction-details {
+  display: flex;  /* Use flexbox to line up elements horizontally */
+  align-items: center;  /* Center-align items vertically */
+  gap: 10px;  /* Optional: Adds space between the text and the button */
+}
+
+.edit-button {
+  background-color: transparent;
+  color: #173363;
+  border: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  display: inline-flex;  /* Ensure the button is part of the flex layout */
+  align-items: center;
+}
+
+.edit-button mat-icon {
+  font-size: 16px;  /* Adjust icon size as needed */
+  vertical-align: middle;  /* Align the icon vertically */
+}
+
+.match-status {
+  display: flex;
+  flex-direction: column;  /* Stack children elements vertically */
+  align-items: center;  /* Center-align children */
+  justify-content: center;  /* Center them horizontally as well */
+  padding: 0 20px;
+}
+
+@media (max-width: 768px) {
+  .match-status, .prediction-details {
+    flex-direction: column;  /* Stack elements vertically on smaller screens */
+    align-items: center;
+  }
+
+  .edit-button {
+    margin-top: 5px;  /* Add some margin top for spacing on small screens */
+  }
+}
+
+.live-gif {
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  border-radius: 50%;
+  animation: blink-animation 1s infinite;
+}
+
+@keyframes blink-animation {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+.live-indicator span {
+  margin-left: 5px;
+  font-weight: bold;
+  color: red;
+}
+
+.info {
+  color: #173363;
+}

@@ -6,7 +6,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class TeamsService {
-  private url = 'http://nicolascartalla.duckdns.org:65180/api/v1';
+  // private url = 'http://nicolascartalla.duckdns.org:65180/api/v1';
+  private url = 'http://localhost:8080/api/v1'
 
   private httpOptions = {
     headers: new HttpHeaders({
@@ -17,7 +18,6 @@ export class TeamsService {
   constructor(private http: HttpClient) { }
 
   getTeamsByChampionshipId(championshipId: number = 1): Observable<any> {
-    console.log('Getting teams by championship ID:', championshipId);
     
     return this.http.get<any>(`${this.url}/team/championship/${championshipId}`);
   }

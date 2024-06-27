@@ -3,12 +3,14 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, of, shareReplay, tap } from 'rxjs';
 import { format, parseISO, isBefore } from 'date-fns';
 import { User } from '../models/user';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private url = 'http://nicolascartalla.duckdns.org:65180';
+  // private url = 'http://nicolascartalla.duckdns.org:65180';
+  private url = 'http://localhost:8080'
 
   private httpOptions = {
     headers: new HttpHeaders({
@@ -16,7 +18,7 @@ export class AuthService {
     }),
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   login(email: string, password: string): Observable<HttpResponse<any>> {
     
@@ -49,8 +51,9 @@ export class AuthService {
         localStorage.setItem('user_first_name', authResult.body.user_profile.first_name);
         localStorage.setItem('user_last_name', authResult.body.user_profile.last_name);
         localStorage.setItem('user_major', authResult.body.user_profile.major);
-        localStorage.setItem('user_role', authResult.body.user_profile.role);
+        localStorage.setItem('role_id', authResult.body.user_profile.role_id);
         localStorage.setItem('document_id', authResult.body.user_profile.document_id);
+        
     } else {
         console.error('Invalid authentication result:', authResult);
     }
@@ -67,7 +70,7 @@ export class AuthService {
       first_name: user.first_name,
       last_name: user.last_name,
       major: user.major,
-      role_id: user.role_id || 1 
+      role_id: 2 
     };
 
     const signupUrl = `${this.url}/api/auth/signup`;
@@ -75,7 +78,7 @@ export class AuthService {
     return this.http.post<any>(signupUrl, formattedUser, { ...this.httpOptions, observe: 'response' })
       .pipe(
         tap(response => {
-          console.log('Response:', response);
+         
         }),
         catchError(this.handleError<any>('signUp'))
       );
@@ -108,12 +111,20 @@ export class AuthService {
   }
 
   getRoles(): string {
-    const role = localStorage.getItem('role');
-    return role ? JSON.parse(role) : '';
+    const role = localStorage.getItem('role_id');
+    return role === '1' ? 'Administrador' : 'Usuario';
   }
 
   isAdmin(): boolean {
     return this.getRoles() === 'Administrador';
+  }
+
+  redirectUser() {
+    if (this.isAdmin()) {
+      this.router.navigate(['/dashboard']);
+    } else {
+      this.router.navigate(['/partidos']);  // Navigate to normal user home page
+    }
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

@@ -1,3 +1,33 @@
-<div>
-    <app-sidenav></app-sidenav>
-</div>
+
+  <div class="app-container">
+    <div class="sidenav">
+        <app-admin-sidenav *ngIf="isAdmin"></app-admin-sidenav>
+        <app-sidenav *ngIf="!isAdmin"></app-sidenav>
+    </div>
+    <div class="scoreboard-container">
+        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 striped-table">
+    
+            <ng-container matColumnDef="position">
+        
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Posición</th>
+              <td mat-cell *matCellDef="let element">{{ element.position }}</td>
+            </ng-container>
+          
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+              <td mat-cell *matCellDef="let element">{{ element.first_name }} {{ element.last_name }}</td>
+            </ng-container>
+          
+            <ng-container matColumnDef="points">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Puntos</th>
+              <td mat-cell *matCellDef="let element">{{ element.points }}</td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="displayedColumns" class="header"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+    </div>
+  </div>
+  
+  
+  

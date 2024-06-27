@@ -1,0 +1,13 @@
+<app-admin-sidenav></app-admin-sidenav>
+<div class="content">
+  <router-outlet></router-outlet>
+  <div class="profile-button-container">
+    <button mat-icon-button (click)="openCreateMatchModal()" class="crear-partido-button">
+        <mat-icon>add_circle</mat-icon>
+        Cargar Partido
+      </button>
+  </div>
+  <div class="tabs">
+    <app-match-tabs [isAdmin]="isAdmin"></app-match-tabs>
+  </div>
+</div>

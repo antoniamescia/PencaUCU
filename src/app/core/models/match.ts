@@ -9,4 +9,5 @@ export interface Match {
   stage_id?: number;
   stage_name?: string;
   group_name?: string;
+  status?: 'upcoming' | 'inProgress' | 'finished';  
 }

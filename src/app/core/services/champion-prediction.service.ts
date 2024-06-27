@@ -7,7 +7,8 @@ import { catchError, Observable, of, shareReplay, tap } from 'rxjs';
 })
 export class ChampionPredictionService {
 
-  private url = 'http://nicolascartalla.duckdns.org:65180/api/v1';
+  // private url = 'http://nicolascartalla.duckdns.org:65180/api/v1';
+  private url = 'http://localhost:8080/api/v1'
 
   private httpOptions = {
     headers: new HttpHeaders({
@@ -42,8 +43,6 @@ export class ChampionPredictionService {
       subchampion: predictionData.subChampion.team_id,
       championship_id: 1  
     };
-
-    console.log('Sending prediction data to backend:', requestBody);
     
 
     return this.http.post<HttpResponse<any>>(`${this.url}/prediction/championship/insert`, requestBody, { observe: 'response' });

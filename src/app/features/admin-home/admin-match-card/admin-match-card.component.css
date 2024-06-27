@@ -1,0 +1,152 @@
+.match-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    padding: 8px 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 16px;
+    width: 800px;
+    max-width: 100%;
+  }
+  
+  .match-info {
+    display: flex;
+    align-items: center;
+    flex: 3;
+  }
+  
+  .stage-group {
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+    font-size: 12px;
+    color: #666;
+  }
+  
+  .team-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 1;
+  }
+  
+  .team-logo {
+    width: 40px;
+    height: 30px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+  
+  .team-name {
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 4px;
+  }
+  
+  .match-status {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    padding: 0 20px;
+  }
+  
+  .match-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    flex: 1;
+    font-size: 12px;
+    color: #888;
+  }
+  
+  @media (max-width: 768px) {
+    .match-card {
+      flex-direction: column;
+      padding: 10px;
+    }
+  
+    .match-info, .match-status, .match-details {
+      flex-basis: 100%;
+      margin-bottom: 10px;
+    }
+  
+    .stage-group {
+      margin-right: 0;
+    }
+  }
+  
+  .action-button, .edit-button {
+    background-color: #173363;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .edit-button {
+    background-color: transparent;
+    color: #173363;
+    border: none;
+  }
+  
+  .edit-button i {
+    margin-right: 5px;
+  }
+  
+  .live-gif {
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    animation: blink-animation 1s infinite;
+  }
+  
+  @keyframes blink-animation {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+  }
+  
+  .live-indicator span {
+    margin-left: 5px;
+    font-weight: bold;
+    color: red;
+  }
+  
+  .action-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-around; /* Adjust this as needed to space the buttons appropriately */
+  }
+  
+  .edit-button, .delete-button {
+    color: #173363; /* Blue color for buttons */
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .edit-button mat-icon, .delete-button mat-icon {
+    font-size: 20px; /* Adjust size as needed */
+  }
+  
+  /* Add any specific hover effects or other styling as needed */
+  .edit-button:hover, .delete-button:hover {
+    background-color: #f0f0f0; /* Light grey background on hover */
+  }
+
+  .score {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }
+  
