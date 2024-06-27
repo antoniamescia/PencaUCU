@@ -11,6 +11,7 @@ Parados en la raíz del proyecto frontend, ejecutar:
 ```bash
 docker-compose up 
 ```
+Accede a la aplicación Angular en http://localhost.
 
 ## Opción 2 - Levantar frontend localmente con ng serve
 ### 2.a - Requisitos
